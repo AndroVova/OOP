@@ -15,18 +15,43 @@ namespace ConsoleApp1
 
             int score = 0;
             Plane.MakeField();
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ResetColor();
             Console.WriteLine($"Score: {score}");
             Console.CursorVisible = false;
 
-            while(Player.IsAlive())
+            while(Player.isAlive)
             {
-
                 DrawBombs();
                 DrawPlayerMovement();
                 Thread.Sleep(100);  
             }
+            Console.Clear();
+            /*Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;*/
+            Console.WriteLine("              ■■■■                              ■■■■                                       \n" +
+                              "           ■■■    ■■                         ■■■    ■■                                     \n" +
+                              "         ■■         ■■                     ■■         ■■                                   \n" +
+                              "         ■■                                ■■                                              \n" +
+                              "         ■■         ■■■■                   ■■         ■■■■                                 \n" +
+                              "         ■■             ■■                 ■■             ■■                               \n" +
+                              "         ■■           ■■■                  ■■           ■■■                                \n" +
+                              "         ■■         ■■■                    ■■         ■■■                                  \n" +
+                              "           ■■     ■■■                        ■■     ■■■                                     \n" +
+                              "             ■■■■■                             ■■■■■                                        \n" +
+                              "");
+
+
+            /*   ■■■■                                                             
+             ■■■   ■■                                                          
+           ■■■      ■■                                                           
+          ■■         ■■                                                         
+          ■■                                                                    
+          ■■     ■■■■■■                                                         
+          ■■         ■■                                                         
+          ■■        ■■■                                                           
+          ■■      ■■■                                                             
+           ■■   ■■■                                                             
+            ■■■■■      */
             Console.ReadKey();
         }
 
