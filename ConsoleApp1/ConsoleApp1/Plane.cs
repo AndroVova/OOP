@@ -10,12 +10,10 @@ namespace ConsoleApp1
 
         static public void MakeField()
         {            
-            string[,] arr = new string[position.X,
-                                       position.Y];
 
-            for (byte i = 0; i < arr.GetLength(0); i++)
+            for (byte i = 0; i < position.X; i++)
             {
-                for (byte j = 0; j < arr.GetLength(1); j++)
+                for (byte j = 0; j < position.Y; j++)
                 {
                     Console.ResetColor();
                     if ((i < 1 || i == position.X - 1) || 
