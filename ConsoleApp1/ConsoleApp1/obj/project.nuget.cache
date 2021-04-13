@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "ojSNZv8hf1dF01jNmmDPPiM7bmSum9vEGADhEyyL2Q/BgI2u6MmHXiixozY7f8BO32v5VfigN0U0xuBKszdvlw==",
+  "dgSpecHash": "AUBUjs4gQH279Qv8xc/2ZhLZWJmzqNyfX7AgYD7cBDQkaE5Kz6CS2A1agUe53eykla5uYVNhzTvCoHP3SLgmmA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Vova\\Desktop\\work\\с#\\ConsoleApp1\\ConsoleApp1\\ConsoleApp1.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\Vova\\Desktop\\work\\oop\\OOP\\ConsoleApp1\\ConsoleApp1\\lb1.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Vova\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
+    "C:\\Users\\Vova\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",
+    "C:\\Users\\Vova\\.nuget\\packages\\system.drawing.common\\5.0.0\\system.drawing.common.5.0.0.nupkg.sha512",
+    "C:\\Users\\Vova\\.nuget\\packages\\system.windows.extensions\\5.0.0\\system.windows.extensions.5.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

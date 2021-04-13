@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Media;
 
 namespace ConsoleApp1
 {
@@ -10,48 +11,42 @@ namespace ConsoleApp1
             Plane.position.X = 15;
             Plane.position.Y = 49;
 
-            Player.position.X = 3;
-            Player.position.Y = 36;
+            Player.position.X = 1;
+            Player.position.Y = 3;
 
-            int score = 0;
+
             Plane.MakeField();
             Console.ResetColor();
-            Console.WriteLine($"Score: {score}");
-            Console.CursorVisible = false;
+            //Console.WriteLine($"Score: {Player.score}");
 
-            while(Player.isAlive)
+            Console.CursorVisible = false ;
+            SoundPlayer sound1 = new SoundPlayer(@"C:\Users\Vova\Desktop\work\oop\OOP\ConsoleApp1\ConsoleApp1\sound\mainTheme.wav");
+            sound1.PlayLooping();
+            while (Player.isAlive)
             {
                 DrawBombs();
                 DrawPlayerMovement();
-                Thread.Sleep(100);  
+                Thread.Sleep(100);
             }
             Console.Clear();
             /*Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;*/
-            Console.WriteLine("              ■■■■                              ■■■■                                       \n" +
-                              "           ■■■    ■■                         ■■■    ■■                                     \n" +
-                              "         ■■         ■■                     ■■         ■■                                   \n" +
-                              "         ■■                                ■■                                              \n" +
-                              "         ■■         ■■■■                   ■■         ■■■■                                 \n" +
-                              "         ■■             ■■                 ■■             ■■                               \n" +
-                              "         ■■           ■■■                  ■■           ■■■                                \n" +
-                              "         ■■         ■■■                    ■■         ■■■                                  \n" +
-                              "           ■■     ■■■                        ■■     ■■■                                     \n" +
-                              "             ■■■■■                             ■■■■■                                        \n" +
-                              "");
-
-
-            /*   ■■■■                                                             
-             ■■■   ■■                                                          
-           ■■■      ■■                                                           
-          ■■         ■■                                                         
-          ■■                                                                    
-          ■■     ■■■■■■                                                         
-          ■■         ■■                                                         
-          ■■        ■■■                                                           
-          ■■      ■■■                                                             
-           ■■   ■■■                                                             
-            ■■■■■      */
+            //MediaPlayer;
+            SoundPlayer sound = new SoundPlayer(@"C:\Users\Vova\Desktop\work\oop\OOP\ConsoleApp1\ConsoleApp1\sound\HALO.wav");
+            sound.PlayLooping();
+            Console.WriteLine("         ■■■■■                                            ■■■■                                       \n" +
+                              "       ■■    ■■                                         ■■    ■■                                     \n" +
+                              "      ■■       ■■                                      ■■      ■■                                    \n" +
+                              "     ■■         ■■                                    ■■        ■■                                   \n" +
+                              "     ■■                                               ■■        ■■                                   \n" +
+                              "     ■■                                               ■■        ■■                                   \n" +
+                              "     ■■     ■■■■■■                                    ■■        ■■                                   \n" +
+                              "     ■■         ■■      ■■■    ■■■■■■    ■■■■         ■■        ■■    ■■      ■■  ■■■■    ■■■■■■     \n" +
+                              "     ■■         ■■      ■ ■    ■  ■  ■   ■            ■■        ■■     ■■    ■■   ■       ■    ■     \n" +
+                              "     ■■        ■■      ■  ■    ■  ■  ■   ■■■■         ■■        ■■      ■■  ■■    ■■■■    ■          \n" +
+                              "      ■■      ■■       ■■■■    ■  ■  ■   ■             ■■      ■■        ■■■■     ■       ■          \n" +
+                              "       ■■■■■■■         ■  ■    ■  ■  ■   ■■■■           ■■■■■■■           ■■      ■■■■    ■          \n"
+                               );
             Console.ReadKey();
         }
 
@@ -71,8 +66,8 @@ namespace ConsoleApp1
 
                 Console.SetCursorPosition(Player.position.Y,
                                           Player.position.X);
-                Console.BackgroundColor = ConsoleColor.Blue;
-                Console.Write(" ");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write("☻");
                 Console.SetCursorPosition(0, Plane.position.X + 1);
                 Console.ResetColor();
             }
@@ -85,13 +80,16 @@ namespace ConsoleApp1
                 {
                     Player.bombs[i].Explosion();
                     Player.bombs.Remove(Player.bombs[i--]);
+                    Console.SetCursorPosition(0, Plane.position.X);
+                    Console.WriteLine($"Score: {Player.score}");
                 }
                 else
                 {
                     Player.bombs[i].Explosion();
                     Console.SetCursorPosition(Player.bombs[i].position.Y,
                                               Player.bombs[i].position.X);
-                    Console.Write('@');
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write('♦');
                     Console.SetCursorPosition(0, Plane.position.X + 1);
                 }
             }
