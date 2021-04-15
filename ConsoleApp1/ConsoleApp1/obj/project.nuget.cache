@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "AUBUjs4gQH279Qv8xc/2ZhLZWJmzqNyfX7AgYD7cBDQkaE5Kz6CS2A1agUe53eykla5uYVNhzTvCoHP3SLgmmA==",
+  "dgSpecHash": "PHQNr5Xdft46Fb+xYnX8Bew/RD0MD31fkJte5phOiOU3E5EoWOL1DX0hkZQyErRJ7/sLAOLdLPMN77TQdezf8g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Vova\\Desktop\\work\\oop\\OOP\\ConsoleApp1\\ConsoleApp1\\lb1.csproj",
+  "projectFilePath": "C:\\Users\\Vova\\Desktop\\work\\с#\\ConsoleApp1\\ConsoleApp1\\ConsoleApp1.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Vova\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
     "C:\\Users\\Vova\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",

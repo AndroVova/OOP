@@ -14,40 +14,61 @@ namespace ConsoleApp1
             Player.position.X = 1;
             Player.position.Y = 3;
 
+            Enemy.position.X = 10;
+            Enemy.position.Y = 3;
+
 
             Plane.MakeField();
             Console.ResetColor();
             //Console.WriteLine($"Score: {Player.score}");
 
             Console.CursorVisible = false ;
-            SoundPlayer sound1 = new SoundPlayer(@"C:\Users\Vova\Desktop\work\oop\OOP\ConsoleApp1\ConsoleApp1\sound\mainTheme.wav");
-            sound1.PlayLooping();
-            while (Player.isAlive)
+            while (Player.isAlive && Enemy.isAlive)
             {
                 DrawBombs();
                 DrawPlayerMovement();
+                DrawEnemyMovement(Enemy.isAlive);
                 Thread.Sleep(100);
             }
+            Console.ResetColor();
             Console.Clear();
-            /*Console.BackgroundColor = ConsoleColor.White;
-            Console.ForegroundColor = ConsoleColor.Black;*/
-            //MediaPlayer;
-            SoundPlayer sound = new SoundPlayer(@"C:\Users\Vova\Desktop\work\oop\OOP\ConsoleApp1\ConsoleApp1\sound\HALO.wav");
-            sound.PlayLooping();
-            Console.WriteLine("         ■■■■■                                            ■■■■                                       \n" +
-                              "       ■■    ■■                                         ■■    ■■                                     \n" +
-                              "      ■■       ■■                                      ■■      ■■                                    \n" +
-                              "     ■■         ■■                                    ■■        ■■                                   \n" +
-                              "     ■■                                               ■■        ■■                                   \n" +
-                              "     ■■                                               ■■        ■■                                   \n" +
-                              "     ■■     ■■■■■■                                    ■■        ■■                                   \n" +
-                              "     ■■         ■■      ■■■    ■■■■■■    ■■■■         ■■        ■■    ■■      ■■  ■■■■    ■■■■■■     \n" +
-                              "     ■■         ■■      ■ ■    ■  ■  ■   ■            ■■        ■■     ■■    ■■   ■       ■    ■     \n" +
-                              "     ■■        ■■      ■  ■    ■  ■  ■   ■■■■         ■■        ■■      ■■  ■■    ■■■■    ■          \n" +
-                              "      ■■      ■■       ■■■■    ■  ■  ■   ■             ■■      ■■        ■■■■     ■       ■          \n" +
-                              "       ■■■■■■■         ■  ■    ■  ■  ■   ■■■■           ■■■■■■■           ■■      ■■■■    ■          \n"
-                               );
-            Console.ReadKey();
+            
+            if (!Player.isAlive)
+            {
+                SoundPlayer sound = new SoundPlayer(@"C:\Users\Vova\Desktop\HALO.wav");
+                sound.PlayLooping();
+                Console.WriteLine("         ■■■■■                                            ■■■■                                       \n" +
+                                  "       ■■    ■■                                         ■■    ■■                                     \n" +
+                                  "      ■■       ■■                                      ■■      ■■                                    \n" +
+                                  "     ■■         ■■                                    ■■        ■■                                   \n" +
+                                  "     ■■                                               ■■        ■■                                   \n" +
+                                  "     ■■                                               ■■        ■■                                   \n" +
+                                  "     ■■     ■■■■■■                                    ■■        ■■                                   \n" +
+                                  "     ■■         ■■      ■■■    ■■■■■■    ■■■■         ■■        ■■    ■■      ■■  ■■■■    ■■■■■■     \n" +
+                                  "     ■■         ■■      ■ ■    ■  ■  ■   ■            ■■        ■■     ■■    ■■   ■       ■    ■     \n" +
+                                  "     ■■        ■■      ■  ■    ■  ■  ■   ■■■■         ■■        ■■      ■■  ■■    ■■■■    ■          \n" +
+                                  "      ■■      ■■       ■■■■    ■  ■  ■   ■             ■■      ■■        ■■■■     ■       ■          \n" +
+                                  "       ■■■■■■■         ■  ■    ■  ■  ■   ■■■■           ■■■■■■■           ■■      ■■■■    ■          \n"
+                                   );
+            }
+            if (!Enemy.isAlive && Player.isAlive)
+            {
+                SoundPlayer sound1 = new SoundPlayer(@"C:\Users\Vova\Desktop\mainTheme.wav");
+                sound1.PlayLooping();
+                Console.WriteLine("    ■■          ■■                  ■■                           ■■              ■             \n" +
+                                  "     ■■        ■■                    ■■                         ■■               ■              \n" +
+                                  "      ■■      ■■                      ■■                       ■■                ■              \n" +
+                                  "       ■■    ■■                        ■■                     ■■                 ■              \n" +
+                                  "        ■■  ■■                          ■■                   ■■                  ■              \n" +
+                                  "         ■■■■                            ■■                 ■■                   ■              \n" +
+                                  "          ■■     ■■■■    ■    ■           ■■      ■■■      ■■    ■   ■■■■■       ■              \n" +
+                                  "          ■■    ■    ■   ■    ■            ■■    ■■■■■    ■■     ■   ■    ■     ■■■               \n" +
+                                  "          ■■    ■    ■   ■    ■             ■■  ■■   ■■  ■■      ■   ■    ■    ■■■■■                \n" +
+                                  "          ■■    ■    ■   ■    ■              ■■■■     ■■■■       ■   ■    ■    ■■■■■           \n" +
+                                  "          ■■     ■■■■      ■■■■               ■■       ■■        ■   ■    ■     ■■■               \n" +
+                                  "                                                                                                    \n"
+                                   );           }
+                Console.ReadKey();
         }
 
         static void DrawPlayerMovement()
@@ -60,13 +81,11 @@ namespace ConsoleApp1
                                           Player.position.X);
 
                 ConsoleKeyInfo str = Console.ReadKey();
-                Player.OnMove(str,
-                              Plane.position.X,
-                              Plane.position.Y);
+                Player.OnMove(str);
 
                 Console.SetCursorPosition(Player.position.Y,
                                           Player.position.X);
-                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write("☻");
                 Console.SetCursorPosition(0, Plane.position.X + 1);
                 Console.ResetColor();
@@ -92,6 +111,25 @@ namespace ConsoleApp1
                     Console.Write('♦');
                     Console.SetCursorPosition(0, Plane.position.X + 1);
                 }
+            }
+        }
+        static void DrawEnemyMovement(bool IsAlive)
+        {
+            if (IsAlive)
+            {
+                Console.BackgroundColor = Console.ForegroundColor = ConsoleColor.Black;
+                Console.SetCursorPosition(Enemy.position.Y,
+                                          Enemy.position.X);
+                Console.Write(" ");
+
+                Enemy.OnMove();
+
+                Console.SetCursorPosition(Enemy.position.Y,
+                                          Enemy.position.X);
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write("@");
+                Console.SetCursorPosition(0, Plane.position.X + 1);
+                Console.ResetColor();
             }
         }
     }

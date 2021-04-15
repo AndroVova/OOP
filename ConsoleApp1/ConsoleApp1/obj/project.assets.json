@@ -195,11 +195,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Vova\\Desktop\\work\\oop\\OOP\\ConsoleApp1\\ConsoleApp1\\lb1.csproj",
-      "projectName": "lb1",
-      "projectPath": "C:\\Users\\Vova\\Desktop\\work\\oop\\OOP\\ConsoleApp1\\ConsoleApp1\\lb1.csproj",
+      "projectUniqueName": "C:\\Users\\Vova\\Desktop\\work\\с#\\ConsoleApp1\\ConsoleApp1\\ConsoleApp1.csproj",
+      "projectName": "ConsoleApp1",
+      "projectPath": "C:\\Users\\Vova\\Desktop\\work\\с#\\ConsoleApp1\\ConsoleApp1\\ConsoleApp1.csproj",
       "packagesPath": "C:\\Users\\Vova\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Vova\\Desktop\\work\\oop\\OOP\\ConsoleApp1\\ConsoleApp1\\obj\\",
+      "outputPath": "C:\\Users\\Vova\\Desktop\\work\\с#\\ConsoleApp1\\ConsoleApp1\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"

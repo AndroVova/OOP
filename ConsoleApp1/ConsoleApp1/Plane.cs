@@ -36,12 +36,18 @@ namespace ConsoleApp1
                     else if (i == Player.position.X &&
                              j == Player.position.Y)
                     {
-                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.ForegroundColor = ConsoleColor.Green;
                         Console.Write("☻");
                     }
-                    else if (i >= 1 && i <= position.X   && 
-                        ((j >= 2              && j <= 3) || 
-                        ((j <= position.Y - 3 && j >= position.Y - 4)))) 
+                    else if (i == Enemy.position.X &&
+                             j == Enemy.position.Y)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.Write("@");
+                    }
+                    else if (i >= 1 && i <= position.X       && 
+                            ((j >= 2              && j <= 3) || 
+                            ((j <= position.Y - 3 && j >= position.Y - 4)))) 
                     {
                         Console.Write(" ");
                     }
