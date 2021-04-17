@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Media;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
@@ -11,7 +12,7 @@ namespace ConsoleApp1
         static public Cell position = new Cell(0, 0);
         static public List<Bomb> bombs = new List<Bomb>();
         static public int score { get; private set; } = 0;
-        static public bool isAlive { get; private set; } = true;
+        static public bool isAlive { get; set; } = true;
         static public void OnMove(ConsoleKeyInfo movement)
         {
             switch (movement.Key)
@@ -68,17 +69,14 @@ namespace ConsoleApp1
                         break;
                     }
             }
-            SoundPlayer sound = new SoundPlayer(@"C:\Users\Vova\Desktop\steps.wav");
-            sound.Play();
         }
 
         public class Bomb
         {
             public Cell position;
-            public byte explosionTime { get => _explosionTime; }
-            /*public byte explosionFrames { get => _explosionFrames; }*/
+            public short explosionTime { get => _explosionTime; }
 
-            private byte _explosionTime = 30;
+            private short _explosionTime = 30;
 
             private byte explosionFramesR = 1;
             private byte explosionFramesL = 1;
@@ -115,6 +113,7 @@ namespace ConsoleApp1
                     Thread.Sleep(75);
                     Bang(' ');
                     Console.ResetColor();
+                    
                 }
                 else
                     _explosionTime--;
@@ -360,6 +359,17 @@ namespace ConsoleApp1
                      }
                 }
                 Console.SetCursorPosition(0, Plane.position.X + 1);
+            }
+
+            public void ExplosionAnimation()
+            {
+                ThreadStart thread1 = new ThreadStart(Explosion);
+                Thread thread = new Thread(thread1);
+                thread.Start();
+                Console.SetCursorPosition(0, Plane.position.X + 1);
+                //Console.WriteLine(" ");
+                //Console.WriteLine( " ");
+                thread.Join(100);
             }
         }
     }

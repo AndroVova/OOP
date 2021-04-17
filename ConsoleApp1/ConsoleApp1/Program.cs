@@ -8,8 +8,48 @@ namespace ConsoleApp1
     {
         static void Main()
         {
-            Plane.position.X = 15;
-            Plane.position.Y = 49;
+            Console.CursorVisible = false;
+
+            SoundPlayer sound0 = new SoundPlayer(@"C:\Users\Vova\Desktop\mainTheme.wav");
+            sound0.PlayLooping();
+            Console.WriteLine(    "     ■■■■■■■■■■                                                                              ■■■■    ■■■■       \n" +
+                                  "     ■■       ■■                                                                             ■  ■    ■          \n" +
+                                  "     ■■        ■■                                                                            ■■■     ■■■         \n" +
+                                  "     ■■         ■■                                                                           ■       ■           \n" +
+                                  "     ■■         ■■                      ■                                                    ■       ■■■■        \n" +
+                                  "     ■■        ■■                       ■                                                                    \n" +
+                                  "     ■■■■■■■■■■■                        ■                                                    ■■■■    ■■■       \n" +
+                                  "     ■■         ■■    ■■■■    ■■■■■■    ■■■■■    ■■■■■   ■■■■■■                              ■  ■    ■  ■       \n" +
+                                  "     ■■         ■■   ■    ■   ■  ■  ■   ■    ■   ■       ■    ■                              ■       ■  ■         \n" +
+                                  "     ■■         ■■   ■    ■   ■  ■  ■   ■    ■   ■■■■■   ■                                   ■       ■  ■       \n" +
+                                  "     ■■        ■■    ■    ■   ■  ■  ■   ■    ■   ■       ■                                   ■       ■  ■        \n" +
+                                  "     ■■■■■■■■■■■      ■■■■    ■  ■  ■   ■■■■■    ■■■■■   ■                                                   \n" +
+                                  "                                                                                             ■■■    ■■■■■         \n" +
+                                  "                                                      ■■■          ■■■                       ■        ■        \n" +
+                                  "                                                      ■■■■        ■■■■                       ■■■      ■        \n" +
+                                  "                                                      ■■ ■■      ■■ ■■                       ■        ■        \n" +
+                                  "                                                      ■■  ■■    ■■  ■■                       ■■■      ■        \n" +
+                                  "                                                      ■■   ■■  ■■   ■■                                       \n" +
+                                  "                                                      ■■    ■■■■    ■■                        ■■     ■■■■         \n" +
+                                  "                                                      ■■            ■■                       ■       ■         \n" +
+                                  "                                                      ■■            ■■    ■■■   ■■■■          ■      ■■■         \n" +
+                                  "                                                      ■■            ■■   ■  ■   ■   ■          ■     ■         \n" +
+                                  "                                                      ■■            ■■   ■  ■   ■   ■        ■■■     ■■■■          \n" +
+                                  "                                                      ■■            ■■   ■■■■   ■   ■                        \n" +
+                                  "                                                      ■■            ■■   ■  ■   ■   ■         ■■     ■■■■            \n" +
+                                  "                                                                                             ■       ■  ■          \n" +
+                                  "                                                                                              ■      ■            \n" +
+                                  "                                                                                               ■     ■            \n" +
+                                  "                                                                                             ■■■     ■             "
+
+                                   );
+
+            Console.ReadLine();
+            Console.Clear();
+            sound0.Stop();
+
+            Plane.position.X = 25;
+            Plane.position.Y = 29;
 
             Player.position.X = 1;
             Player.position.Y = 3;
@@ -17,17 +57,14 @@ namespace ConsoleApp1
             Enemy.position.X = 10;
             Enemy.position.Y = 3;
 
-
             Plane.MakeField();
             Console.ResetColor();
-            //Console.WriteLine($"Score: {Player.score}");
 
-            Console.CursorVisible = false ;
             while (Player.isAlive && Enemy.isAlive)
             {
                 DrawBombs();
                 DrawPlayerMovement();
-                DrawEnemyMovement(Enemy.isAlive);
+                DrawEnemyMovement();
                 Thread.Sleep(100);
             }
             Console.ResetColor();
@@ -37,7 +74,8 @@ namespace ConsoleApp1
             {
                 SoundPlayer sound = new SoundPlayer(@"C:\Users\Vova\Desktop\HALO.wav");
                 sound.PlayLooping();
-                Console.WriteLine("         ■■■■■                                            ■■■■                                       \n" +
+                
+                string str =     ("         ■■■■■                                            ■■■■                                       \n" +
                                   "       ■■    ■■                                         ■■    ■■                                     \n" +
                                   "      ■■       ■■                                      ■■      ■■                                    \n" +
                                   "     ■■         ■■                                    ■■        ■■                                   \n" +
@@ -50,24 +88,47 @@ namespace ConsoleApp1
                                   "      ■■      ■■       ■■■■    ■  ■  ■   ■             ■■      ■■        ■■■■     ■       ■          \n" +
                                   "       ■■■■■■■         ■  ■    ■  ■  ■   ■■■■           ■■■■■■■           ■■      ■■■■    ■          \n"
                                    );
+                while (!Console.KeyAvailable)
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write(str);
+                    Thread.Sleep(500);
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(str);
+                    Thread.Sleep(500);
+                    Console.Clear();
+                }
             }
             if (!Enemy.isAlive && Player.isAlive)
             {
                 SoundPlayer sound1 = new SoundPlayer(@"C:\Users\Vova\Desktop\mainTheme.wav");
                 sound1.PlayLooping();
-                Console.WriteLine("    ■■          ■■                  ■■                           ■■              ■             \n" +
+                string str =     ("    ■■          ■■                  ■■                           ■■              ■              \n" +
                                   "     ■■        ■■                    ■■                         ■■               ■              \n" +
                                   "      ■■      ■■                      ■■                       ■■                ■              \n" +
                                   "       ■■    ■■                        ■■                     ■■                 ■              \n" +
                                   "        ■■  ■■                          ■■                   ■■                  ■              \n" +
                                   "         ■■■■                            ■■                 ■■                   ■              \n" +
                                   "          ■■     ■■■■    ■    ■           ■■      ■■■      ■■    ■   ■■■■■       ■              \n" +
-                                  "          ■■    ■    ■   ■    ■            ■■    ■■■■■    ■■     ■   ■    ■     ■■■               \n" +
-                                  "          ■■    ■    ■   ■    ■             ■■  ■■   ■■  ■■      ■   ■    ■    ■■■■■                \n" +
-                                  "          ■■    ■    ■   ■    ■              ■■■■     ■■■■       ■   ■    ■    ■■■■■           \n" +
-                                  "          ■■     ■■■■      ■■■■               ■■       ■■        ■   ■    ■     ■■■               \n" +
-                                  "                                                                                                    \n"
-                                   );           }
+                                  "          ■■    ■    ■   ■    ■            ■■    ■■■■■    ■■     ■   ■    ■      ■              \n" +
+                                  "          ■■    ■    ■   ■    ■             ■■  ■■   ■■  ■■      ■   ■    ■      ■              \n" +
+                                  "          ■■    ■    ■   ■    ■              ■■■■     ■■■■       ■   ■    ■     ■■■             \n" +
+                                  "          ■■     ■■■■      ■■■■               ■■       ■■        ■   ■    ■     ■■■             \n" +
+                                  "                                                                                                \n"
+                                   );
+                while (!Console.KeyAvailable)
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write(str);
+                    Thread.Sleep(500);
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(str);
+                    Thread.Sleep(500);
+                    Console.Clear();
+                }
+            }
                 Console.ReadKey();
         }
 
@@ -97,7 +158,7 @@ namespace ConsoleApp1
             {
                 if (Player.bombs[i].explosionTime == 0)
                 {
-                    Player.bombs[i].Explosion();
+                    Player.bombs[i].ExplosionAnimation();
                     Player.bombs.Remove(Player.bombs[i--]);
                     Console.SetCursorPosition(0, Plane.position.X);
                     Console.WriteLine($"Score: {Player.score}");
@@ -113,9 +174,9 @@ namespace ConsoleApp1
                 }
             }
         }
-        static void DrawEnemyMovement(bool IsAlive)
+        static void DrawEnemyMovement()
         {
-            if (IsAlive)
+            if (Enemy.isAlive)
             {
                 Console.BackgroundColor = Console.ForegroundColor = ConsoleColor.Black;
                 Console.SetCursorPosition(Enemy.position.Y,

@@ -53,9 +53,10 @@ namespace ConsoleApp1
                     }
                     else
                     {
-                        bricks.Add(new Wall(new Cell(i, j)));
+                        /*bricks.Add(new Wall(new Cell(i, j)));
                         Console.ForegroundColor = ConsoleColor.White;
-                        Console.Write("#");
+                        Console.Write("#");*/
+                        Console.Write(" ");
                     }
                 }
                 Console.WriteLine();
