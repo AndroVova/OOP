@@ -23,13 +23,8 @@ namespace ConsoleApp1
             else
                 reverseMovement = false;
             
-            if(Player.position == position)
-            {
-                Player.isAlive = false;
-            } 
-            /*Console.ResetColor();
-            Console.SetCursorPosition(0, Plane.position.X + 1);*/
-            //Console.WriteLine(position.X +" : " + position.Y);
+            if(Player.position == position)            
+                Player.isAlive = false;            
         }
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Media;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
@@ -76,7 +75,7 @@ namespace ConsoleApp1
             public Cell position;
             public short explosionTime { get => _explosionTime; }
 
-            private short _explosionTime = 30;
+            private short _explosionTime = 18;
 
             private byte explosionFramesR = 1;
             private byte explosionFramesL = 1;
@@ -106,11 +105,11 @@ namespace ConsoleApp1
                             Enemy.position.Y == position.Y)
                                 Enemy.isAlive = false;
 
-                    Thread.Sleep(75);
+                    Thread.Sleep(50);
                     Bang('+');
-                    Thread.Sleep(75);
+                    Thread.Sleep(50);
                     Bang('·');
-                    Thread.Sleep(75);
+                    Thread.Sleep(50);
                     Bang(' ');
                     Console.ResetColor();
                     
@@ -367,9 +366,7 @@ namespace ConsoleApp1
                 Thread thread = new Thread(thread1);
                 thread.Start();
                 Console.SetCursorPosition(0, Plane.position.X + 1);
-                //Console.WriteLine(" ");
-                //Console.WriteLine( " ");
-                thread.Join(100);
+                thread.Join(150);
             }
         }
     }

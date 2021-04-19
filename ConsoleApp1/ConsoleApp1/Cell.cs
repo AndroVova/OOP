@@ -1,6 +1,4 @@
-﻿
-
-namespace ConsoleApp1
+﻿namespace ConsoleApp1
 {
     public struct Cell
     {

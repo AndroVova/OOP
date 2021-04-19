@@ -44,6 +44,7 @@ namespace ConsoleApp1
 
                                    );
 
+            Console.BackgroundColor = Console.ForegroundColor = ConsoleColor.Black;
             Console.ReadLine();
             Console.Clear();
             sound0.Stop();
@@ -65,8 +66,9 @@ namespace ConsoleApp1
                 DrawBombs();
                 DrawPlayerMovement();
                 DrawEnemyMovement();
-                Thread.Sleep(100);
+                Thread.Sleep(150);
             }
+            Thread.Sleep(100);
             Console.ResetColor();
             Console.Clear();
             
@@ -114,7 +116,7 @@ namespace ConsoleApp1
                                   "          ■■    ■    ■   ■    ■            ■■    ■■■■■    ■■     ■   ■    ■      ■              \n" +
                                   "          ■■    ■    ■   ■    ■             ■■  ■■   ■■  ■■      ■   ■    ■      ■              \n" +
                                   "          ■■    ■    ■   ■    ■              ■■■■     ■■■■       ■   ■    ■     ■■■             \n" +
-                                  "          ■■     ■■■■      ■■■■               ■■       ■■        ■   ■    ■     ■■■             \n" +
+                                  "          ■■     ■■■■     ■■■■■               ■■       ■■        ■   ■    ■     ■■■             \n" +
                                   "                                                                                                \n"
                                    );
                 while (!Console.KeyAvailable)
