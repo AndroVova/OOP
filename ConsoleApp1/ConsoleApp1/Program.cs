@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Threading;
 using System.Media;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ConsoleApp1
 {
     class Program
     {
+        public static List<Enemy> enemies = new List<Enemy>();
         static void Main()
         {
             Console.CursorVisible = false;
@@ -55,13 +58,16 @@ namespace ConsoleApp1
             Player.position.X = 1;
             Player.position.Y = 3;
 
-            Enemy.position.X = 10;
-            Enemy.position.Y = 3;
+            Enemy enemy1 = new Enemy(new Cell(9 , 26));
+            Enemy enemy2 = new Enemy(new Cell(20, 25));
+
+            enemies.Add(enemy1);
+            enemies.Add(enemy2);
 
             Plane.MakeField();
             Console.ResetColor();
 
-            while (Player.isAlive && Enemy.isAlive)
+            while (Player.isAlive && enemies.Count != 0)
             {
                 DrawBombs();
                 DrawPlayerMovement();
@@ -102,7 +108,7 @@ namespace ConsoleApp1
                     Console.Clear();
                 }
             }
-            if (!Enemy.isAlive && Player.isAlive)
+            if (enemies.Count == 0 && Player.isAlive)
             {
                 SoundPlayer sound1 = new SoundPlayer(@"C:\Users\Vova\Desktop\mainTheme.wav");
                 sound1.PlayLooping();
@@ -178,21 +184,24 @@ namespace ConsoleApp1
         }
         static void DrawEnemyMovement()
         {
-            if (Enemy.isAlive)
+            for (int i = 0; i < enemies.Count; i++)
             {
-                Console.BackgroundColor = Console.ForegroundColor = ConsoleColor.Black;
-                Console.SetCursorPosition(Enemy.position.Y,
-                                          Enemy.position.X);
-                Console.Write(" ");
+                if (enemies.Any(el => el.isAlive))
+                {
+                    Console.BackgroundColor = Console.ForegroundColor = ConsoleColor.Black;
+                    Console.SetCursorPosition(enemies[i].position.Y,
+                                              enemies[i].position.X);
+                    Console.Write(" ");
 
-                Enemy.OnMove();
+                    enemies[i].OnMove();
 
-                Console.SetCursorPosition(Enemy.position.Y,
-                                          Enemy.position.X);
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write("@");
-                Console.SetCursorPosition(0, Plane.position.X + 1);
-                Console.ResetColor();
+                    Console.SetCursorPosition(enemies[i].position.Y,
+                                              enemies[i].position.X);
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.Write("@");
+                    Console.SetCursorPosition(0, Plane.position.X + 1);
+                    Console.ResetColor();
+                }
             }
         }
     }

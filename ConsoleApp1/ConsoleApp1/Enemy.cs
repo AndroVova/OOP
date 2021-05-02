@@ -3,13 +3,18 @@
 
 namespace ConsoleApp1
 {
-    public static class Enemy
+    public class Enemy
     {
-        static public Cell position = new Cell();
-        static public bool isAlive = true;
-        static public bool reverseMovement = false ;
-
-        static public void OnMove()
+        public Cell position = new Cell();
+        public bool isAlive = true;
+        public bool reverseMovement = false ;
+        
+        public Enemy(Cell position)
+        {
+            this.position = position;
+        }
+        
+        public void OnMove()
         {
             if (!Plane.walls.Any(el => el.position ==
                                        new Cell((byte)(position.X - 1), position.Y)) && !reverseMovement)
@@ -26,5 +31,6 @@ namespace ConsoleApp1
             if(Player.position == position)            
                 Player.isAlive = false;            
         }
+        
     }
 }

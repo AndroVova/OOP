@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ConsoleApp1
 {
@@ -39,8 +40,8 @@ namespace ConsoleApp1
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.Write("☻");
                     }
-                    else if (i == Enemy.position.X &&
-                             j == Enemy.position.Y)
+                    else if (Program.enemies.Any(el => el.position.X == i &&
+                                                       el.position.Y == j))
                     {
                         Console.ForegroundColor = ConsoleColor.Blue;
                         Console.Write("@");
@@ -53,9 +54,9 @@ namespace ConsoleApp1
                     }
                     else
                     {
-                        bricks.Add(new Wall(new Cell(i, j)));
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.Write("#");
+                        /*bricks.Add(new Wall(new Cell(i, j)));
+                        Console.ForegroundColor = ConsoleColor.White;*/
+                        Console.Write(" ");
 
                     }
                 }
