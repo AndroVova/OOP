@@ -46,6 +46,13 @@ namespace ConsoleApp1
                         Console.ForegroundColor = ConsoleColor.Blue;
                         Console.Write("@");
                     }
+                    else if ((i == Program.teleport.positionIn.X  && j == Program.teleport.positionIn.Y) ||
+                             (i == Program.teleport.positionOut.X && j == Program.teleport.positionOut.Y))
+                    {
+                        Console.BackgroundColor = ConsoleColor.Cyan;
+                        Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                        Console.Write("▀");
+                    }
                     else if (i >= 1 && i <= position.X       && 
                             ((j >= 2              && j <= 3) || 
                             ((j <= position.Y - 3 && j >= position.Y - 4)))) 
@@ -54,9 +61,9 @@ namespace ConsoleApp1
                     }
                     else
                     {
-                        /*bricks.Add(new Wall(new Cell(i, j)));
-                        Console.ForegroundColor = ConsoleColor.White;*/
-                        Console.Write(" ");
+                        bricks.Add(new Wall(new Cell(i, j)));
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Write("░");
 
                     }
                 }

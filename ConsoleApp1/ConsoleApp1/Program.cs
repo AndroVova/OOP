@@ -9,6 +9,7 @@ namespace ConsoleApp1
     class Program
     {
         public static List<Enemy> enemies = new List<Enemy>();
+        static public Teleporter teleport = new Teleporter(new Cell(10, 2), new Cell(10, 25));
         static void Main()
         {
             Console.CursorVisible = false;
@@ -52,6 +53,7 @@ namespace ConsoleApp1
             Console.Clear();
             sound0.Stop();
 
+            
             Plane.position.X = 25;
             Plane.position.Y = 29;
 
@@ -59,10 +61,10 @@ namespace ConsoleApp1
             Player.position.Y = 3;
 
             Enemy enemy1 = new Enemy(new Cell(9 , 26));
-            Enemy enemy2 = new Enemy(new Cell(20, 25));
+            Enemy enemy2 = new Enemy(new Cell(20, 2));
 
             enemies.Add(enemy1);
-            enemies.Add(enemy2);
+            enemies.Add(enemy2);            
 
             Plane.MakeField();
             Console.ResetColor();
@@ -72,6 +74,7 @@ namespace ConsoleApp1
                 DrawBombs();
                 DrawPlayerMovement();
                 DrawEnemyMovement();
+                TeleporeterDraw();
                 Thread.Sleep(150);
             }
             Thread.Sleep(100);
@@ -204,5 +207,36 @@ namespace ConsoleApp1
                 }
             }
         }
+        static void TeleporeterDraw()
+        {
+            Console.SetCursorPosition(teleport.positionIn.Y,
+                                      teleport.positionIn.X);
+
+            Console.BackgroundColor = ConsoleColor.Cyan;
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            if (changeColor)
+                Console.Write("▀");  
+            else
+                Console.Write("▄");
+            
+            Console.SetCursorPosition(teleport.positionOut.Y,
+                                      teleport.positionOut.X);
+            Console.BackgroundColor = ConsoleColor.Cyan;
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            if (changeColor)
+            {
+                Console.Write("▀");
+                changeColor = false;
+            }
+            else
+            {
+                Console.Write("▄");
+                changeColor = true;
+            }
+
+            Console.SetCursorPosition(0, Plane.position.X + 1);
+            Console.ResetColor();
+        }
+        private static bool changeColor = true;
     }
 }

@@ -29,8 +29,8 @@ namespace ConsoleApp1
                 reverseMovement = false;
             
             if(Player.position == position)            
-                Player.isAlive = false;            
-        }
-        
+                Player.isAlive = false;
+            Program.teleport.TeleportEnemy();
+        }        
     }
 }

@@ -68,6 +68,7 @@ namespace ConsoleApp1
                         break;
                     }
             }
+            Program.teleport.Teleport();
         }
 
         public class Bomb
