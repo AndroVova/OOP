@@ -10,7 +10,7 @@ namespace ConsoleApp1
    {
         static public Cell position = new Cell(0, 0);
         static public List<Bomb> bombs = new List<Bomb>();
-        static public int score { get; private set; } = 0;
+        static public int broakenBricks = 1;
         static public bool isAlive { get; set; } = true;
         static public void OnMove(ConsoleKeyInfo movement)
         {
@@ -74,9 +74,9 @@ namespace ConsoleApp1
         public class Bomb
         {
             public Cell position;
-            public short explosionTime { get => _explosionTime; }
+            public int explosionTime { get => _explosionTime; }
 
-            private short _explosionTime = 18;
+            private int _explosionTime = 3 * Program.gameSpeed / 10;
 
             private byte explosionFramesR = 1;
             private byte explosionFramesL = 1;
@@ -110,11 +110,11 @@ namespace ConsoleApp1
                                                                       position.Y)));
                         }                                
 
-                    Thread.Sleep(50);
+                    Thread.Sleep(Program.gameSpeed);
                     Bang('+');
-                    Thread.Sleep(50);
+                    Thread.Sleep(Program.gameSpeed);
                     Bang('·');
-                    Thread.Sleep(50);
+                    Thread.Sleep(Program.gameSpeed);
                     Bang(' ');
                     Console.ResetColor();
                     
@@ -136,7 +136,7 @@ namespace ConsoleApp1
                     {
                         Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
                                                                               new Cell(this.position.X, (byte)(this.position.Y + 1))));
-                        score+=100;
+                        broakenBricks++;
                     }
                     explosionFramesR++;
                     Console.SetCursorPosition(position.Y + 1, position.X);
@@ -154,7 +154,7 @@ namespace ConsoleApp1
                      {
                          Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
                                                                                new Cell(this.position.X, (byte)(this.position.Y + 2))));
-                        score+=100;
+                        broakenBricks++;
                      }
                      explosionFramesR++;
 
@@ -211,7 +211,7 @@ namespace ConsoleApp1
                     {
                         Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
                                                                                new Cell(this.position.X, (byte)(this.position.Y - 1))));
-                        score += 100;
+                        broakenBricks++;
                     }
                     explosionFramesL++;
 
@@ -229,7 +229,7 @@ namespace ConsoleApp1
                      {
                          Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
                                                                                 new Cell(this.position.X, (byte)(this.position.Y - 2))));
-                        score += 100;
+                        broakenBricks++;
                      }
                      explosionFramesL++;
                      Console.SetCursorPosition(position.Y - 1, position.X);
@@ -287,7 +287,7 @@ namespace ConsoleApp1
                     {
                         Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
                                                                                new Cell((byte)(this.position.X + 1), this.position.Y)));
-                        score += 100;
+                        broakenBricks++;
                     }
                     explosionFramesB++;
                     Console.SetCursorPosition(position.Y, position.X + 1);
@@ -304,7 +304,7 @@ namespace ConsoleApp1
                         {
                             Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
                                                                               new Cell((byte)(this.position.X + 2), this.position.Y)));
-                            score+=100;
+                            broakenBricks++;
                         }
                         explosionFramesB++;
                         Console.SetCursorPosition(position.Y, position.X + 1);
@@ -362,7 +362,7 @@ namespace ConsoleApp1
                     {
                         Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
                                                                                new Cell((byte)(this.position.X - 1), this.position.Y)));
-                        score += 100;
+                        broakenBricks++;
                     }
                     explosionFramesT++;
                     Console.SetCursorPosition(position.Y, position.X - 1);
@@ -379,7 +379,7 @@ namespace ConsoleApp1
                          {
                              Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
                                                                                     new Cell((byte)(this.position.X - 2), this.position.Y)));
-                             score += 100;
+                             broakenBricks++;
                          }
                          explosionFramesT++;
                          Console.SetCursorPosition(position.Y, position.X - 1);
@@ -438,7 +438,7 @@ namespace ConsoleApp1
                 Thread thread = new Thread(thread1);
                 thread.Start();
                 Console.SetCursorPosition(0, Plane.position.X + 1);
-                thread.Join(150);
+                thread.Join(3 * Program.gameSpeed);
             }
         }
     }
