@@ -11,7 +11,7 @@ namespace ConsoleApp1
     class Program
     {
         public static List<Enemy> enemies = new List<Enemy>();
-        static public Teleporter teleport = new Teleporter(new Cell(10, 2), new Cell(10, 25));
+        static public Teleporter teleport = new Teleporter(new Cell(5, 2), new Cell(15, 25));
 
         static public Enemy enemy1 = new Enemy(new Cell(0, 0));
         static public Enemy enemy2 = new Enemy(new Cell(0, 0));
@@ -76,13 +76,13 @@ namespace ConsoleApp1
             "       ██████  ██      ███████   ████   █████   ██████         █████   ██ ██  ██    ██    █████   ██████  \n" +
             "       ██      ██      ██   ██    ██    ██      ██   ██        ██      ██  ██ ██    ██    ██      ██   ██ \n" +
             "       ██      ███████ ██   ██    ██    ███████ ██   ██ ▄█     ███████ ██   ████    ██    ███████ ██   ██ \n" +
-            "                                                                                       \n" +
+            "\n" +
             "\n" +
             "               ██    ██  ██████  ██    ██ ██████      ███    ██  █████  ███    ███ ███████  \n" +
-            "                ██  ██  ██    ██ ██    ██ ██   ██     ████   ██ ██   ██ ████  ████ ██            \n" +
-            "                 ████   ██    ██ ██    ██ ██████      ██ ██  ██ ███████ ██ ████ ██ █████              \n" +
-            "                  ██    ██    ██ ██    ██ ██   ██     ██  ██ ██ ██   ██ ██  ██  ██ ██                 \n" +
-            "                  ██     ██████   ██████  ██   ██     ██   ████ ██   ██ ██      ██ ███████           \n";
+            "                ██  ██  ██    ██ ██    ██ ██   ██     ████   ██ ██   ██ ████  ████ ██       \n" +
+            "                 ████   ██    ██ ██    ██ ██████      ██ ██  ██ ███████ ██ ████ ██ █████    \n" +
+            "                  ██    ██    ██ ██    ██ ██   ██     ██  ██ ██ ██   ██ ██  ██  ██ ██       \n" +
+            "                  ██     ██████   ██████  ██   ██     ██   ████ ██   ██ ██      ██ ███████  \n";
             Console.WriteLine(enterNameText);
             Console.SetCursorPosition(50, 16);
             Player.name = Console.ReadLine();
@@ -217,7 +217,7 @@ namespace ConsoleApp1
             }
         }
 
-            static private void Game()
+        static private void Game()
             {
                 Media.mainTheme.Stop();
                 Console.BackgroundColor = Console.ForegroundColor = ConsoleColor.Black;
@@ -273,7 +273,7 @@ namespace ConsoleApp1
                     DrawBombs();
                     DrawPlayerMovement();
                     DrawEnemyMovement();
-                    TeleporeterDraw();
+                    DrawTeleporeter();
                     DrawEnemyLives();
                     Thread.Sleep(3 * gameSpeed);
                 }
@@ -348,7 +348,7 @@ namespace ConsoleApp1
                     Media.mainTheme.Stop();
                 }
             }
-            static private void DrawPlayerMovement()
+        static private void DrawPlayerMovement()
             {
                 if (Console.KeyAvailable)
                 {
@@ -368,7 +368,7 @@ namespace ConsoleApp1
                     Console.ResetColor();
                 }
             }
-            static private void DrawBombs()
+        static private void DrawBombs()
             {
                 for (int i = 0; i < Player.bombs.Count; i++)
                 {
@@ -389,36 +389,32 @@ namespace ConsoleApp1
                 }
             }
 
-            static private void DrawEnemyMovement()
+        static private void DrawEnemyMovement()
             {
                 for (int i = 0; i < enemies.Count; i++)
-                {
-                    if (enemies.Any(el => el.isAlive))
-                    {
-                        Console.BackgroundColor = Console.ForegroundColor = ConsoleColor.Black;
-                        Console.SetCursorPosition(enemies[i].position.Y,
-                                                  enemies[i].position.X);
-                        Console.Write(" ");
-
-                        enemies[i].OnMove(enemies[i]);
-
-                        Console.SetCursorPosition(enemies[i].position.Y,
-                                                  enemies[i].position.X);
-                        Console.ForegroundColor = ConsoleColor.Blue;
-                        Console.Write("@");
-                        Console.SetCursorPosition(0, Plane.position.X + 1);
-                        Console.ResetColor();
-                    }
+                { 
+                    Console.BackgroundColor = Console.ForegroundColor = ConsoleColor.Black;
+                    Console.SetCursorPosition(enemies[i].position.Y,
+                                              enemies[i].position.X);
+                    Console.Write(" ");
+                    enemies[i].OnMove(enemies[i]);
+                
+                    Console.SetCursorPosition(enemies[i].position.Y,
+                                              enemies[i].position.X);
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.Write("☻");
+                    Console.SetCursorPosition(0, Plane.position.X + 1);
+                    Console.ResetColor();
                 }
             }
 
-            static private void DrawEnemyLives()
+        static private void DrawEnemyLives()
             {
                 Console.SetCursorPosition(0, Plane.position.X);
                 Console.Write($"enemies alive: {enemies.Count}/{enemiesNumber}");
             }
 
-            static void TeleporeterDraw()
+        static void DrawTeleporeter()
 
             {
                 Console.SetCursorPosition(teleport.positionIn.Y,
@@ -449,7 +445,7 @@ namespace ConsoleApp1
                 Console.SetCursorPosition(0, Plane.position.X + 1);
                 Console.ResetColor();
             }
-            private static void TextAnimation(string str)
+        private static void TextAnimation(string str)
             {
                 while (!Console.KeyAvailable)
                 {
@@ -464,7 +460,7 @@ namespace ConsoleApp1
                     Console.ResetColor();
                 }
             }
-            private static void ResetLevel()
+        private static void ResetLevel()
             {
                 level1 = false;
                 level2 = false;
@@ -482,7 +478,7 @@ namespace ConsoleApp1
 
                 Menu.currentSection = 0;
             }
-            public static void DrawRating()
+        public static void DrawRating()
             {
                 var rating = new WorkWithFile();
                 var result = rating.ReadJSON().OrderByDescending(el => el.UsedBobms).ToList();

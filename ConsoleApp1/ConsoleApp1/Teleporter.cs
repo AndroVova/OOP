@@ -18,7 +18,7 @@ namespace ConsoleApp1
         public List<Teleporter> teleporters = new List<Teleporter>();
         public int isOut = 0;
 
-        public void Teleport()
+        public void TeleportPlayer()
         {
             if(Player.position == positionIn)
                 Player.position = positionOut;

@@ -6,7 +6,6 @@ namespace ConsoleApp1
     public class Enemy
     {
         public Cell position = new Cell();
-        public bool isAlive = true;
         public bool reverseVerticalMovement = false ;
         public bool reverseHorizontalMovement = false;
         

@@ -268,6 +268,5 @@ namespace ConsoleApp1
                 Console.SetCursorPosition(0,0);
                 Console.ReadLine();
             }
-
         }
     }

@@ -71,7 +71,7 @@ namespace ConsoleApp1
                         break;
                     }
             }
-            Program.teleport.Teleport();
+            Program.teleport.TeleportPlayer();
         }
 
         public class Bomb
