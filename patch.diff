@@ -1,0 +1,253 @@
+diff --git a/ConsoleApp1/ConsoleApp1/Enemy.cs b/ConsoleApp1/ConsoleApp1/Enemy.cs
+index 45eabf8..333f3b6 100644
+--- a/ConsoleApp1/ConsoleApp1/Enemy.cs
++++ b/ConsoleApp1/ConsoleApp1/Enemy.cs
+@@ -51,6 +51,7 @@ namespace ConsoleApp1
+                                        new Cell((byte)(position.X + 1), position.Y)) && reverseMovement)
+                 position.X++;
+             else
++<<<<<<< HEAD
+ <<<<<<< HEAD
+                 reverseVerticalMovement = false;
+ 
+@@ -89,6 +90,8 @@ namespace ConsoleApp1
+ 
+ 
+ =======
++=======
++>>>>>>> parent of 0010415 (redesigned menu and added simple settings)
+                 reverseMovement = false;
+             
+             if(Player.position == position)            
+diff --git a/ConsoleApp1/ConsoleApp1/Plane.cs b/ConsoleApp1/ConsoleApp1/Plane.cs
+index a3d004a..daddf23 100644
+--- a/ConsoleApp1/ConsoleApp1/Plane.cs
++++ b/ConsoleApp1/ConsoleApp1/Plane.cs
+@@ -54,6 +54,7 @@ namespace ConsoleApp1
+                         Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                         Console.Write("▀");
+                     }
++<<<<<<< HEAD
+ <<<<<<< HEAD
+                     else if (( i >= 1 && i <= position.X &&
+                             ((j >= 2 && j <= 3)         ||
+@@ -65,6 +66,11 @@ namespace ConsoleApp1
+                     }
+                     else if ((((i + 1) % 4 == 0 && position.X - i > 4 &&  j >= 7 && j <= position.Y - 8) ||
+                              (      i >= 3 && i < position.X - 5     && (j == 5 || j == position.Y - 6))) && Program.level3 )
++=======
++                    else if (i >= 1 && i <= position.X       && 
++                            ((j >= 2              && j <= 3) || 
++                            ((j <= position.Y - 3 && j >= position.Y - 4)))) 
++>>>>>>> parent of 0010415 (redesigned menu and added simple settings)
+ =======
+                     else if (i >= 1 && i <= position.X       && 
+                             ((j >= 2              && j <= 3) || 
+diff --git a/ConsoleApp1/ConsoleApp1/Player.cs b/ConsoleApp1/ConsoleApp1/Player.cs
+index 027c60b..4f21348 100644
+--- a/ConsoleApp1/ConsoleApp1/Player.cs
++++ b/ConsoleApp1/ConsoleApp1/Player.cs
+@@ -10,9 +10,13 @@ namespace ConsoleApp1
+    {
+         static public Cell position = new Cell(0, 0);
+         static public List<Bomb> bombs = new List<Bomb>();
++<<<<<<< HEAD
+ <<<<<<< HEAD
+         static public string name;
+         static public int usedBombs = 0;
++=======
++        static public int score { get; private set; } = 0;
++>>>>>>> parent of 0010415 (redesigned menu and added simple settings)
+ =======
+         static public int score { get; private set; } = 0;
+ >>>>>>> parent of 0010415 (redesigned menu and added simple settings)
+@@ -149,7 +153,10 @@ namespace ConsoleApp1
+                         Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
+                                                                               new Cell(this.position.X, (byte)(this.position.Y + 1))));
+ <<<<<<< HEAD
++<<<<<<< HEAD
+ =======
++=======
++>>>>>>> parent of 0010415 (redesigned menu and added simple settings)
+                         score+=100;
+                     }
+ >>>>>>> parent of 0010415 (redesigned menu and added simple settings)
+@@ -240,6 +247,10 @@ namespace ConsoleApp1
+                         Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
+                                                                                new Cell(this.position.X, (byte)(this.position.Y - 1))));
+ <<<<<<< HEAD
++<<<<<<< HEAD
++=======
++                        score += 100;
++>>>>>>> parent of 0010415 (redesigned menu and added simple settings)
+ =======
+                         score += 100;
+ >>>>>>> parent of 0010415 (redesigned menu and added simple settings)
+@@ -336,6 +347,10 @@ namespace ConsoleApp1
+                         Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
+                                                                                new Cell((byte)(this.position.X + 1), this.position.Y)));
+ <<<<<<< HEAD
++<<<<<<< HEAD
++=======
++                        score += 100;
++>>>>>>> parent of 0010415 (redesigned menu and added simple settings)
+ =======
+                         score += 100;
+ >>>>>>> parent of 0010415 (redesigned menu and added simple settings)
+@@ -432,6 +447,10 @@ namespace ConsoleApp1
+                         Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
+                                                                                new Cell((byte)(this.position.X - 1), this.position.Y)));
+ <<<<<<< HEAD
++<<<<<<< HEAD
++=======
++                        score += 100;
++>>>>>>> parent of 0010415 (redesigned menu and added simple settings)
+ =======
+                         score += 100;
+ >>>>>>> parent of 0010415 (redesigned menu and added simple settings)
+diff --git a/ConsoleApp1/ConsoleApp1/Program.cs b/ConsoleApp1/ConsoleApp1/Program.cs
+index 3a8502f..029d4e5 100644
+--- a/ConsoleApp1/ConsoleApp1/Program.cs
++++ b/ConsoleApp1/ConsoleApp1/Program.cs
+@@ -12,6 +12,7 @@ namespace ConsoleApp1
+     {
+         public static List<Enemy> enemies = new List<Enemy>();
+         static public Teleporter teleport = new Teleporter(new Cell(10, 2), new Cell(10, 25));
++<<<<<<< HEAD
+ <<<<<<< HEAD
+ 
+         static public Enemy enemy1 = new Enemy(new Cell(0, 0));
+@@ -32,6 +33,8 @@ namespace ConsoleApp1
+         static private byte enemiesNumber;
+ 
+ 
++=======
++>>>>>>> parent of 0010415 (redesigned menu and added simple settings)
+ =======
+ >>>>>>> parent of 0010415 (redesigned menu and added simple settings)
+         static void Main()
+@@ -211,11 +214,15 @@ namespace ConsoleApp1
+                                   "       ■■■■■■■         ■  ■    ■  ■  ■   ■■■■           ■■■■■■■           ■■      ■■■■    ■          \n"
+                                    );
+                 while (!Console.KeyAvailable)
++<<<<<<< HEAD
++>>>>>>> parent of 0010415 (redesigned menu and added simple settings)
++=======
+ >>>>>>> parent of 0010415 (redesigned menu and added simple settings)
+                 {
+                     Console.ForegroundColor = ConsoleColor.White;
+                     Console.Write(str);
+                     Thread.Sleep(500);
++<<<<<<< HEAD
+                     Console.Clear();
+                     Console.ForegroundColor = ConsoleColor.Red;
+                     Console.Write(str);
+@@ -345,6 +352,44 @@ namespace ConsoleApp1
+                 }
+ >>>>>>> parent of 0010415 (redesigned menu and added simple settings)
+             }
++=======
++                    Console.Clear();
++                    Console.ForegroundColor = ConsoleColor.Red;
++                    Console.Write(str);
++                    Thread.Sleep(500);
++                    Console.Clear();
++                }
++            }
++            if (enemies.Count == 0 && Player.isAlive)
++            {
++                SoundPlayer sound1 = new SoundPlayer(@"C:\Users\Vova\Desktop\mainTheme.wav");
++                sound1.PlayLooping();
++                string str =     ("    ■■          ■■                  ■■                           ■■              ■              \n" +
++                                  "     ■■        ■■                    ■■                         ■■               ■              \n" +
++                                  "      ■■      ■■                      ■■                       ■■                ■              \n" +
++                                  "       ■■    ■■                        ■■                     ■■                 ■              \n" +
++                                  "        ■■  ■■                          ■■                   ■■                  ■              \n" +
++                                  "         ■■■■                            ■■                 ■■                   ■              \n" +
++                                  "          ■■     ■■■■    ■    ■           ■■      ■■■      ■■    ■   ■■■■■       ■              \n" +
++                                  "          ■■    ■    ■   ■    ■            ■■    ■■■■■    ■■     ■   ■    ■      ■              \n" +
++                                  "          ■■    ■    ■   ■    ■             ■■  ■■   ■■  ■■      ■   ■    ■      ■              \n" +
++                                  "          ■■    ■    ■   ■    ■              ■■■■     ■■■■       ■   ■    ■     ■■■             \n" +
++                                  "          ■■     ■■■■     ■■■■■               ■■       ■■        ■   ■    ■     ■■■             \n" +
++                                  "                                                                                                \n"
++                                   );
++                while (!Console.KeyAvailable)
++                {
++                    Console.ForegroundColor = ConsoleColor.White;
++                    Console.Write(str);
++                    Thread.Sleep(500);
++                    Console.Clear();
++                    Console.ForegroundColor = ConsoleColor.Red;
++                    Console.Write(str);
++                    Thread.Sleep(500);
++                    Console.Clear();
++                }
++            }
++>>>>>>> parent of 0010415 (redesigned menu and added simple settings)
+                 Console.ReadKey();
+         }
+ 
+@@ -507,9 +552,14 @@ namespace ConsoleApp1
+                 {
+                     Player.bombs[i].ExplosionAnimation();
+                     Player.bombs.Remove(Player.bombs[i--]);
++<<<<<<< HEAD
+ <<<<<<< HEAD
+                     Console.BackgroundColor = ConsoleColor.Red;
+                     Console.ResetColor();
++=======
++                    Console.SetCursorPosition(0, Plane.position.X);
++                    Console.WriteLine($"Score: {Player.score}");
++>>>>>>> parent of 0010415 (redesigned menu and added simple settings)
+ =======
+                     Console.SetCursorPosition(0, Plane.position.X);
+                     Console.WriteLine($"Score: {Player.score}");
+@@ -549,6 +599,7 @@ namespace ConsoleApp1
+                 }
+             }
+         }
++<<<<<<< HEAD
+ <<<<<<< HEAD
+         
+         static private void DrawEnemyLives()
+@@ -558,6 +609,8 @@ namespace ConsoleApp1
+         }
+         static private void TeleporeterDraw()
+ =======
++=======
++>>>>>>> parent of 0010415 (redesigned menu and added simple settings)
+         static void TeleporeterDraw()
+ >>>>>>> parent of 0010415 (redesigned menu and added simple settings)
+         {
+@@ -590,6 +643,7 @@ namespace ConsoleApp1
+             Console.ResetColor();
+         }
+ <<<<<<< HEAD
++<<<<<<< HEAD
+ 
+         
+         private static void TextAnimation(string str)
+@@ -639,6 +693,9 @@ namespace ConsoleApp1
+             else
+                 Console.WriteLine("You haven`t any data to show");
+         }*/
++=======
++        private static bool changeColor = true;
++>>>>>>> parent of 0010415 (redesigned menu and added simple settings)
+ =======
+         private static bool changeColor = true;
+ >>>>>>> parent of 0010415 (redesigned menu and added simple settings)
+diff --git a/ConsoleApp1/ConsoleApp1/obj/Debug/net5.0/ConsoleApp1.csproj.CoreCompileInputs.cache b/ConsoleApp1/ConsoleApp1/obj/Debug/net5.0/ConsoleApp1.csproj.CoreCompileInputs.cache
+index 6d36469..3664959 100644
+--- a/ConsoleApp1/ConsoleApp1/obj/Debug/net5.0/ConsoleApp1.csproj.CoreCompileInputs.cache
++++ b/ConsoleApp1/ConsoleApp1/obj/Debug/net5.0/ConsoleApp1.csproj.CoreCompileInputs.cache
+@@ -1,5 +1,9 @@
+ <<<<<<< HEAD
++<<<<<<< HEAD
+ ae89b3ffc73e8edf02d8c6bcb28b2d9512f6fe0c
+ =======
+ 950f56903363779fde37544e161200e47bf865bb
+ >>>>>>> parent of 0010415 (redesigned menu and added simple settings)
++=======
++950f56903363779fde37544e161200e47bf865bb
++>>>>>>> parent of 0010415 (redesigned menu and added simple settings)

@@ -9,6 +9,7 @@ namespace ConsoleApp1
         static public Cell position = new Cell(0, 0);
         static public List<Wall> walls = new List<Wall>();
         static public List<Wall> bricks = new List<Wall>();
+        static public List<Wall> empty = new List<Wall>();
 
         static public void MakeField()
         {            
@@ -46,37 +47,58 @@ namespace ConsoleApp1
                         Console.ForegroundColor = ConsoleColor.Blue;
                         Console.Write("@");
                     }
-                    else if ((i == Program.teleport.positionIn.X && j == Program.teleport.positionIn.Y) ||
+                    else if ((i == Program.teleport.positionIn.X  && j == Program.teleport.positionIn.Y) ||
                              (i == Program.teleport.positionOut.X && j == Program.teleport.positionOut.Y))
                     {
                         Console.BackgroundColor = ConsoleColor.Cyan;
                         Console.ForegroundColor = ConsoleColor.DarkMagenta;
                         Console.Write("▀");
                     }
-                    else if (i >= 1 && i <= position.X &&
-                            ((j >= 2 && j <= 3) ||
-                              j <= position.Y - 3 && j >= position.Y - 4))
+<<<<<<< HEAD
+<<<<<<< HEAD
+                    else if (( i >= 1 && i <= position.X &&
+                            ((j >= 2 && j <= 3)         ||
+                              j <= position.Y - 3 && j >= position.Y - 4)) &&
+                              (Program.level2 || Program.level3))
                     {
+                        empty.Add(new Wall(new Cell(i, j)));
                         Console.Write(" ");
                     }
-                    else if (((j >= 7 && j <= position.Y - 8) && ((i + 1) % 4 == 0 && position.X - i > 4)) ||
-                             ((i >= 3 && i < position.X - 5) && (j == 5 || j == position.Y - 6)))
+                    else if ((((i + 1) % 4 == 0 && position.X - i > 4 &&  j >= 7 && j <= position.Y - 8) ||
+                             (      i >= 3 && i < position.X - 5     && (j == 5 || j == position.Y - 6))) && Program.level3 )
+=======
+                    else if (i >= 1 && i <= position.X       && 
+                            ((j >= 2              && j <= 3) || 
+                            ((j <= position.Y - 3 && j >= position.Y - 4)))) 
+>>>>>>> parent of 0010415 (redesigned menu and added simple settings)
+=======
+                    else if (i >= 1 && i <= position.X       && 
+                            ((j >= 2              && j <= 3) || 
+                            ((j <= position.Y - 3 && j >= position.Y - 4)))) 
+>>>>>>> parent of 0010415 (redesigned menu and added simple settings)
                     {
+                        empty.Add(new Wall(new Cell(i, j)));
                         Console.Write(" ");
                     }
                     else
                     {
-                        bricks.Add(new Wall(new Cell(i, j)));
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.Write("░");
+                        if (Program.level1)
+                        {
+                            empty.Add(new Wall(new Cell(i, j)));
+                            Console.Write(" ");
+                        }
+                        else
+                        {
+                            bricks.Add(new Wall(new Cell(i, j)));
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.Write("░");
+                        }
 
                     }
                 }
                 Console.WriteLine();
             }
-            Console.WriteLine($"broaken bricks: {Player.broakenBricks}");
         }
-        
         public class Wall
         {
             public Cell position;

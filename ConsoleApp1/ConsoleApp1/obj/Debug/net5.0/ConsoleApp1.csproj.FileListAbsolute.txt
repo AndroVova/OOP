@@ -46,3 +46,5 @@ C:\Users\Vova\Desktop\work\oop\OOP\ConsoleApp1\ConsoleApp1\obj\Debug\net5.0\Cons
 C:\Users\Vova\Desktop\work\oop\OOP\ConsoleApp1\ConsoleApp1\obj\Debug\net5.0\ref\ConsoleApp1.dll
 C:\Users\Vova\Desktop\work\oop\OOP\ConsoleApp1\ConsoleApp1\obj\Debug\net5.0\ConsoleApp1.pdb
 C:\Users\Vova\Desktop\work\oop\OOP\ConsoleApp1\ConsoleApp1\obj\Debug\net5.0\ConsoleApp1.genruntimeconfig.cache
+C:\Users\Vova\Desktop\work\oop\OOP\ConsoleApp1\ConsoleApp1\bin\Debug\net5.0\ConsoleTables.dll
+C:\Users\Vova\Desktop\work\oop\OOP\ConsoleApp1\ConsoleApp1\bin\Debug\net5.0\Newtonsoft.Json.dll
