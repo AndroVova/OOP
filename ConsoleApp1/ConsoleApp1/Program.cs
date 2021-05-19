@@ -449,7 +449,6 @@ namespace ConsoleApp1
                 Console.SetCursorPosition(0, Plane.position.X + 1);
                 Console.ResetColor();
             }
-
             private static void TextAnimation(string str)
             {
                 while (!Console.KeyAvailable)

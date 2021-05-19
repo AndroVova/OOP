@@ -16,7 +16,7 @@ namespace ConsoleApp1
         }
         public void OnMove(Enemy enemy)
         {
-           /* var path = PathFinding.CalculateIdealPath(enemy);
+            var path = PathFinding.CalculateIdealPath(enemy);
             if (Program.isHard  &&
                 path.Count != 1 && 
                 path.Count < 17 && 
@@ -27,7 +27,7 @@ namespace ConsoleApp1
                 position.X = (byte)step.X;
                 position.Y = (byte)step.Y;
             }
-            else*/
+            else
                 NormalOnMove();
 
             if (Player.position == position)
