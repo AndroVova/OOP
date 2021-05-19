@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Media;
 using System.Threading;
 
 namespace ConsoleApp1
@@ -10,16 +9,8 @@ namespace ConsoleApp1
    {
         static public Cell position = new Cell(0, 0);
         static public List<Bomb> bombs = new List<Bomb>();
-<<<<<<< HEAD
-<<<<<<< HEAD
         static public string name;
         static public int usedBombs = 0;
-=======
-        static public int score { get; private set; } = 0;
->>>>>>> parent of 0010415 (redesigned menu and added simple settings)
-=======
-        static public int score { get; private set; } = 0;
->>>>>>> parent of 0010415 (redesigned menu and added simple settings)
         static public bool isAlive { get; set; } = true;
         static public void OnMove(ConsoleKeyInfo movement)
         {
@@ -150,16 +141,10 @@ namespace ConsoleApp1
                                            new Cell(this.position.X, (byte)(this.position.Y + 1))))
                 {
                     if (explosionFramesR == 4)
+                    {
                         Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
-                                                                              new Cell(this.position.X, (byte)(this.position.Y + 1))));
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> parent of 0010415 (redesigned menu and added simple settings)
-                        score+=100;
+                                                                              new Cell(this.position.X, (byte)(this.position.Y + 1))));                      
                     }
->>>>>>> parent of 0010415 (redesigned menu and added simple settings)
                     explosionFramesR++;
                     Console.SetCursorPosition(position.Y + 1, position.X);
                     Console.Write(str);
@@ -171,17 +156,6 @@ namespace ConsoleApp1
                           Plane.bricks.Any(el => el.position ==
                                                  new Cell(this.position.X, (byte)(this.position.Y + 2))))
                 {
-<<<<<<< HEAD
-=======
-                    
-                     if (explosionFramesR == 4)
-                     {
-                         Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
-                                                                               new Cell(this.position.X, (byte)(this.position.Y + 2))));
-                        score+=100;
-                     }
-                     explosionFramesR++;
->>>>>>> parent of 0010415 (redesigned menu and added simple settings)
 
                     if (explosionFramesR == 4)
                     {
@@ -236,7 +210,6 @@ namespace ConsoleApp1
                     }
                 }
             }
-
             private void LeftBang(char str)
             {
                 if (Plane.bricks.Any(el => el.position ==
@@ -246,14 +219,6 @@ namespace ConsoleApp1
                     {
                         Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
                                                                                new Cell(this.position.X, (byte)(this.position.Y - 1))));
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-                        score += 100;
->>>>>>> parent of 0010415 (redesigned menu and added simple settings)
-=======
-                        score += 100;
->>>>>>> parent of 0010415 (redesigned menu and added simple settings)
                     }
                     explosionFramesL++;
 
@@ -266,7 +231,6 @@ namespace ConsoleApp1
                                                 new Cell(this.position.X, (byte)(this.position.Y - 1))) &&
                           Plane.bricks.Any(el => el.position ==
                                                  new Cell(this.position.X, (byte)(this.position.Y - 2))))
-<<<<<<< HEAD
                 {
                     if (explosionFramesL == 4)
                     {
@@ -279,21 +243,6 @@ namespace ConsoleApp1
                     Console.SetCursorPosition(position.Y - 2, position.X);
                     Console.Write(str);
                 }
-=======
-                     {
-                     if (explosionFramesL == 4)
-                     {
-                         Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
-                                                                                new Cell(this.position.X, (byte)(this.position.Y - 2))));
-                        score += 100;
-                     }
-                     explosionFramesL++;
-                     Console.SetCursorPosition(position.Y - 1, position.X);
-                     Console.Write(str);
-                     Console.SetCursorPosition(position.Y - 2, position.X);
-                     Console.Write(str);
-                     }
->>>>>>> parent of 0010415 (redesigned menu and added simple settings)
                 else if (!Plane.walls.Any(el => el.position ==
                                                 new Cell(this.position.X, (byte)(this.position.Y - 1))))
                 {
@@ -336,7 +285,6 @@ namespace ConsoleApp1
                     }
                 }
             }
-
             private void DownBang(char str)
             {
                 if (Plane.bricks.Any(el => el.position ==
@@ -346,14 +294,6 @@ namespace ConsoleApp1
                     {
                         Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
                                                                                new Cell((byte)(this.position.X + 1), this.position.Y)));
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-                        score += 100;
->>>>>>> parent of 0010415 (redesigned menu and added simple settings)
-=======
-                        score += 100;
->>>>>>> parent of 0010415 (redesigned menu and added simple settings)
                     }
                     explosionFramesB++;
                     Console.SetCursorPosition(position.Y, position.X + 1);
@@ -361,11 +301,10 @@ namespace ConsoleApp1
                 }
                 else if (!Plane.bricks.Any(el => el.position ==
                                                  new Cell((byte)(this.position.X + 1), this.position.Y)) &&
-                         !Plane.walls.Any (el => el.position ==
-                                                 new Cell((byte)(this.position.X + 1), this.position.Y)) &&
+                         !Plane.walls.Any(el => el.position ==
+                                                new Cell((byte)(this.position.X + 1), this.position.Y)) &&
                           Plane.bricks.Any(el => el.position ==
                                                  new Cell((byte)(this.position.X + 2), this.position.Y)))
-<<<<<<< HEAD
                 {
                     if (explosionFramesB == 4)
                     {
@@ -378,21 +317,6 @@ namespace ConsoleApp1
                     Console.SetCursorPosition(position.Y, position.X + 2);
                     Console.Write(str);
                 }
-=======
-                     {
-                        if (explosionFramesB == 4)
-                        {
-                            Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
-                                                                              new Cell((byte)(this.position.X + 2), this.position.Y)));
-                            score+=100;
-                        }
-                        explosionFramesB++;
-                        Console.SetCursorPosition(position.Y, position.X + 1);
-                        Console.Write(str);
-                        Console.SetCursorPosition(position.Y, position.X + 2);
-                        Console.Write(str);
-                     }
->>>>>>> parent of 0010415 (redesigned menu and added simple settings)
                 else if (!Plane.walls.Any(el => el.position ==
                                                 new Cell((byte)(this.position.X + 1), this.position.Y)))
                 {
@@ -434,26 +358,16 @@ namespace ConsoleApp1
                         Console.Write(str);
                     }
                 }
-
             }
-
             private void UpBang(char str)
             {
                 if (Plane.bricks.Any(el => el.position ==
-                                           new Cell((byte)(this.position.X - 1), this.position.Y)))
+                                                           new Cell((byte)(this.position.X - 1), this.position.Y)))
                 {
                     if (explosionFramesT == 4)
                     {
                         Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
                                                                                new Cell((byte)(this.position.X - 1), this.position.Y)));
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-                        score += 100;
->>>>>>> parent of 0010415 (redesigned menu and added simple settings)
-=======
-                        score += 100;
->>>>>>> parent of 0010415 (redesigned menu and added simple settings)
                     }
                     explosionFramesT++;
                     Console.SetCursorPosition(position.Y, position.X - 1);
@@ -465,7 +379,6 @@ namespace ConsoleApp1
                                                  new Cell((byte)(this.position.X - 1), this.position.Y)) &&
                           Plane.bricks.Any(el => el.position ==
                                                  new Cell((byte)(this.position.X - 2), this.position.Y)))
-<<<<<<< HEAD
                 {
                     if (explosionFramesT == 4)
                     {
@@ -478,21 +391,6 @@ namespace ConsoleApp1
                     Console.SetCursorPosition(position.Y, position.X - 2);
                     Console.Write(str);
                 }
-=======
-                     {
-                         if (explosionFramesT == 4)
-                         {
-                             Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
-                                                                                    new Cell((byte)(this.position.X - 2), this.position.Y)));
-                             score += 100;
-                         }
-                         explosionFramesT++;
-                         Console.SetCursorPosition(position.Y, position.X - 1);
-                         Console.Write(str);
-                         Console.SetCursorPosition(position.Y, position.X - 2);
-                         Console.Write(str);
-                     }
->>>>>>> parent of 0010415 (redesigned menu and added simple settings)
                 else if (!Plane.walls.Any(el => el.position ==
                                                 new Cell((byte)(this.position.X - 1), this.position.Y)))
                 {

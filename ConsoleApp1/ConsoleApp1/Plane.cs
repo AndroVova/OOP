@@ -54,8 +54,6 @@ namespace ConsoleApp1
                         Console.ForegroundColor = ConsoleColor.DarkMagenta;
                         Console.Write("▀");
                     }
-<<<<<<< HEAD
-<<<<<<< HEAD
                     else if (( i >= 1 && i <= position.X &&
                             ((j >= 2 && j <= 3)         ||
                               j <= position.Y - 3 && j >= position.Y - 4)) &&
@@ -65,17 +63,7 @@ namespace ConsoleApp1
                         Console.Write(" ");
                     }
                     else if ((((i + 1) % 4 == 0 && position.X - i > 4 &&  j >= 7 && j <= position.Y - 8) ||
-                             (      i >= 3 && i < position.X - 5     && (j == 5 || j == position.Y - 6))) && Program.level3 )
-=======
-                    else if (i >= 1 && i <= position.X       && 
-                            ((j >= 2              && j <= 3) || 
-                            ((j <= position.Y - 3 && j >= position.Y - 4)))) 
->>>>>>> parent of 0010415 (redesigned menu and added simple settings)
-=======
-                    else if (i >= 1 && i <= position.X       && 
-                            ((j >= 2              && j <= 3) || 
-                            ((j <= position.Y - 3 && j >= position.Y - 4)))) 
->>>>>>> parent of 0010415 (redesigned menu and added simple settings)
+                             (      i >= 3 && i < position.X - 5      && (j == 5 || j == position.Y - 6))) && Program.level3 )
                     {
                         empty.Add(new Wall(new Cell(i, j)));
                         Console.Write(" ");

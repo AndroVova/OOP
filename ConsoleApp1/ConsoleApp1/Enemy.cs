@@ -7,7 +7,8 @@ namespace ConsoleApp1
     {
         public Cell position = new Cell();
         public bool isAlive = true;
-        public bool reverseMovement = false ;
+        public bool reverseVerticalMovement = false ;
+        public bool reverseHorizontalMovement = false;
         
         public Enemy(Cell position)
         {
@@ -15,7 +16,7 @@ namespace ConsoleApp1
         }
         public void OnMove(Enemy enemy)
         {
-            /*var path = PathFinding.CalculateIdealPath(enemy);
+           /* var path = PathFinding.CalculateIdealPath(enemy);
             if (Program.isHard  &&
                 path.Count != 1 && 
                 path.Count < 17 && 
@@ -42,17 +43,19 @@ namespace ConsoleApp1
         public void NormalOnMove()
         {
             if (!Plane.walls.Any(el => el.position ==
-                                       new Cell((byte)(position.X - 1), position.Y)) && !reverseMovement)
+                                       new Cell((byte)(position.X - 1), position.Y)) &&
+                !Plane.bricks.Any(el => el.position ==
+                                       new Cell((byte)(position.X - 1), position.Y)) && !reverseVerticalMovement)
                 position.X--;
             else
-                reverseMovement = true;
+                reverseVerticalMovement = true;
 
             if (!Plane.walls.Any(el => el.position ==
-                                       new Cell((byte)(position.X + 1), position.Y)) && reverseMovement)
+                                       new Cell((byte)(position.X + 1), position.Y)) &&
+                !Plane.bricks.Any(el => el.position ==
+                                       new Cell((byte)(position.X + 1), position.Y)) && reverseVerticalMovement)
                 position.X++;
             else
-<<<<<<< HEAD
-<<<<<<< HEAD
                 reverseVerticalMovement = false;
 
             if ((Plane.walls.Any(el => el.position ==
@@ -87,17 +90,6 @@ namespace ConsoleApp1
                 position.Y += 1;
             else
                 reverseHorizontalMovement = false;
-
-
-=======
-=======
->>>>>>> parent of 0010415 (redesigned menu and added simple settings)
-                reverseMovement = false;
-            
-            if(Player.position == position)            
-                Player.isAlive = false;
-            Program.teleport.TeleportEnemy();
->>>>>>> parent of 0010415 (redesigned menu and added simple settings)
         }        
     }
 }
