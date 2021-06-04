@@ -6,8 +6,12 @@ namespace ConsoleApp1
     static public class Menu
     {
         static private int position;
+
         static public bool isSelected = false;
+        static public bool isBack = false;
+
         static public int currentSection = 0;
+
         static private string startGameText =
                                    ("       ███████ ████████  █████  ██████  ████████      ██████   █████  ███    ███ ███████ \n" +
                                     "       ██         ██    ██   ██ ██   ██    ██        ██       ██   ██ ████  ████ ██      \n" +
@@ -127,6 +131,116 @@ namespace ConsoleApp1
         "       ██   ██ ██ █████   █████   ██ ██      ██    ██ ██         ██      ████   \n" +
         "       ██   ██ ██ ██      ██      ██ ██      ██    ██ ██         ██       ██    \n" +
         "       ██████  ██ ██      ██      ██  ██████  ██████  ███████    ██       ██    \n";
+        static private string ByeText = ("\n" +
+                                  "\n" +
+                                  "\n" +
+                                  "\n" +
+                                  "            ▀█████████▄  ▄██   ▄      ▄████████    \n" +
+                                  "              ███    ███ ███   ██▄   ███    ███    \n" +
+                                  "              ███    ███ ███▄▄▄███   ███    █▀     \n" +
+                                  "             ▄███▄▄▄██▀  ▀▀▀▀▀▀███  ▄███▄▄▄        \n" +
+                                  "            ▀▀███▀▀▀██▄  ▄██   ███ ▀▀███▀▀▀       \n" +
+                                  "              ███    ██▄ ███   ███   ███    █▄    \n" +
+                                  "              ███    ███ ███   ███   ███    ███   \n" +
+                                  "            ▄█████████▀   ▀█████▀    ██████████   \n" +
+                                  "\n" +
+                                  "                                            ▀█████████▄  ▄██   ▄      ▄████████  \n" +
+                                  "                                             ███    ███ ███   ██▄   ███    ███   \n" +
+                                  "                                             ███    ███ ███▄▄▄███   ███    █▀    \n" +
+                                  "                                            ▄███▄▄▄██▀  ▀▀▀▀▀▀███  ▄███▄▄▄       \n" +
+                                  "                                           ▀▀███▀▀▀██▄  ▄██   ███ ▀▀███▀▀▀      \n" +
+                                  "                                             ███    ██▄ ███   ███   ███    █▄   \n" +
+                                  "                                             ███    ███ ███   ███   ███    ███  \n" +
+                                  "                                           ▄█████████▀   ▀█████▀    ██████████ \n");
+        static public string bomberManText =
+                   "\n" +
+                   "\n" +
+                   "\n" +
+                   "\n" +
+                   "\n" +
+                   "            ▀█████████▄   ▄██████▄    ▄▄▄▄███▄▄▄▄   ▀█████████▄     ▄████████    ▄████████ \n" +
+                   "              ███    ███ ███    ███ ▄██▀▀▀███▀▀▀██▄   ███    ███   ███    ███   ███    ███ \n" +
+                   "              ███    ███ ███    ███ ███   ███   ███   ███    ███   ███    █▀    ███    ███ \n" +
+                   "             ▄███▄▄▄██▀  ███    ███ ███   ███   ███  ▄███▄▄▄██▀   ▄███▄▄▄      ▄███▄▄▄▄██▀ \n" +
+                   "            ▀▀███▀▀▀██▄  ███    ███ ███   ███   ███ ▀▀███▀▀▀██▄  ▀▀███▀▀▀     ▀▀███▀▀▀▀▀   \n" +
+                   "              ███    ██▄ ███    ███ ███   ███   ███   ███    ██▄   ███    █▄  ▀███████████ \n" +
+                   "              ███    ███ ███    ███ ███   ███   ███   ███    ███   ███    ███   ███    ███ \n" +
+                   "            ▄█████████▀   ▀██████▀   ▀█   ███   █▀  ▄█████████▀    ██████████   ███    ███ \n" +
+                   "                                                                                ███    ███ \n" +
+                   "                                                 ▄▄▄▄███▄▄▄▄      ▄████████ ███▄▄▄▄        \n" +
+                   "                                               ▄██▀▀▀███▀▀▀██▄   ███    ███ ███▀▀▀██▄      \n" +
+                   "                                               ███   ███   ███   ███    ███ ███   ███      \n" +
+                   "                                               ███   ███   ███   ███    ███ ███   ███      \n" +
+                   "                                               ███   ███   ███ ▀███████████ ███   ███      \n" +
+                   "                                               ███   ███   ███   ███    ███ ███   ███      \n" +
+                   "                                               ███   ███   ███   ███    ███ ███   ███      \n" +
+                   "                                                ▀█   ███   █▀    ███    █▀   ▀█   █▀       \n" +
+                   "\n" +
+                   "                                   press enter to start                                    \n" +
+                   "\n";
+
+
+        static public string enterNameText =
+        "\n" +
+        "\n" +
+        "       ██████  ██       █████  ██    ██ ███████ ██████         ███████ ███    ██ ████████ ███████ ██████  \n" +
+        "       ██   ██ ██      ██   ██  ██  ██  ██      ██   ██        ██      ████   ██    ██    ██      ██   ██ \n" +
+        "       ██████  ██      ███████   ████   █████   ██████         █████   ██ ██  ██    ██    █████   ██████  \n" +
+        "       ██      ██      ██   ██    ██    ██      ██   ██        ██      ██  ██ ██    ██    ██      ██   ██ \n" +
+        "       ██      ███████ ██   ██    ██    ███████ ██   ██ ▄█     ███████ ██   ████    ██    ███████ ██   ██ \n" +
+        "\n" +
+        "\n" +
+        "               ██    ██  ██████  ██    ██ ██████      ███    ██  █████  ███    ███ ███████  \n" +
+        "                ██  ██  ██    ██ ██    ██ ██   ██     ████   ██ ██   ██ ████  ████ ██       \n" +
+        "                 ████   ██    ██ ██    ██ ██████      ██ ██  ██ ███████ ██ ████ ██ █████    \n" +
+        "                  ██    ██    ██ ██    ██ ██   ██     ██  ██ ██ ██   ██ ██  ██  ██ ██       \n" +
+        "                  ██     ██████   ██████  ██   ██     ██   ████ ██   ██ ██      ██ ███████  \n";
+         static public string loseText = (
+    "\n" +
+    "\n" +
+    "\n" +
+    "\n" +
+   "            ▄██████▄     ▄████████   ▄▄▄▄███▄▄▄▄      ▄████████                                   \n" +
+   "           ███    ███   ███    ███ ▄██▀▀▀███▀▀▀██▄   ███    ███                                   \n" +
+   "           ███    █▀    ███    ███ ███   ███   ███   ███    █▀                                    \n" +
+   "          ▄███          ███    ███ ███   ███   ███  ▄███▄▄▄                                       \n" +
+   "         ▀▀███ ████▄  ▀███████████ ███   ███   ███ ▀▀███▀▀▀                                       \n" +
+   "           ███    ███   ███    ███ ███   ███   ███   ███    █▄                                    \n" +
+   "           ███    ███   ███    ███ ███   ███   ███   ███    ███                                   \n" +
+   "           ████████▀    ███    █▀   ▀█   ███   █▀    ██████████                                   \n" +
+   "\n" +
+   "                                                     ▄██████▄   ▄█    █▄     ▄████████    ▄████████ \n" +
+   "                                                    ███    ███ ███    ███   ███    ███   ███    ███ \n" +
+   "                                                    ███    ███ ███    ███   ███    █▀    ███    ███ \n" +
+   "                                                    ███    ███ ███    ███  ▄███▄▄▄      ▄███▄▄▄▄██▀ \n" +
+   "                                                    ███    ███ ███    ███ ▀▀███▀▀▀     ▀▀███▀▀▀▀▀   \n" +
+   "                                                    ███    ███ ███    ███   ███    █▄  ▀███████████ \n" +
+   "                                                    ███    ███ ███    ███   ███    ███   ███    ███ \n" +
+   "                                                     ▀██████▀   ▀██████▀    ██████████   ███    ███ \n" +
+   "                                                                                         ███    ███ \n");
+
+        static public string winText = (
+                    "\n" +
+                    "\n" +
+                    "\n" +
+                    "\n" +
+                    "               ▄██   ▄    ▄██████▄  ███    █▄                      \n" +
+                    "               ███   ██▄ ███    ███ ███    ███                     \n" +
+                    "               ███▄▄▄███ ███    ███ ███    ███                     \n" +
+                    "               ▀▀▀▀▀▀███ ███    ███ ███    ███                     \n" +
+                    "               ▄██   ███ ███    ███ ███    ███                     \n" +
+                    "               ███   ███ ███    ███ ███    ███                     \n" +
+                    "               ███   ███ ███    ███ ███    ███                     \n" +
+                    "                ▀█████▀   ▀██████▀  ████████▀                      \n" +
+                    "\n" +
+                    "                                    ▄█     █▄   ▄█  ███▄▄▄▄   \n" +
+                    "                                   ███     ███ ███  ███▀▀▀██▄ \n" +
+                    "                                   ███     ███ ███▌ ███   ███ \n" +
+                    "                                   ███     ███ ███▌ ███   ███ \n" +
+                    "                                   ███     ███ ███▌ ███   ███ \n" +
+                    "                                   ███     ███ ███  ███   ███ \n" +
+                    "                                   ███ ▄█▄ ███ ███  ███   ███ \n" +
+                    "                                    ▀███▀███▀  █▀    ▀█   █▀  \n");
 
         static public string[] menu = new string[] {startGameText, settingsText, resultsText, exitText};
         static public string[] settings = new string[] { controlsText, gameSpeedSettingText, DifficultyText, backText };
@@ -210,7 +324,6 @@ namespace ConsoleApp1
             }
 
         }
-
         static public void ViewControls()
         {
             Console.Write
@@ -267,6 +380,131 @@ namespace ConsoleApp1
                 Console.ResetColor();
                 Console.SetCursorPosition(0,0);
                 Console.ReadLine();
+                Console.Clear();
+                currentSection = 1;
+                isSelected = true;
+        }
+        
+        static public void MakeMenuStructure()
+        {
+            bool gameIsActive = true;
+            while (gameIsActive)
+            {
+                Media.mainTheme.PlayLooping();
+                MakeMenu(menu);
+                Console.Clear();
+
+                if (currentSection == 0)
+                {
+                    StartGameButton();
+                    if(isBack)
+                        continue;
+                }
+                else if (currentSection == 1)
+                {
+                    currentSection = 0;
+                    MakeMenu(settings);
+                    Console.Clear();
+                    switch (currentSection)
+                    {
+                        case 0:
+                            ViewControls();                            
+                            continue;
+                        case 1:
+                            GameSpeedButton();
+                            continue;
+                        case 2:
+                            DifficultyButton();
+                            continue;
+                        case 3:
+                            currentSection = 1;
+                            continue;
+                    }
+                }
+                else if (currentSection == 2)
+                {
+                    Program.DrawRating();
+                    Console.ReadLine();
+                    Console.Clear();
+                    continue;
+                }
+                else if (currentSection == 3)
+                {
+                    Console.SetWindowSize(100, 30);
+                    Program.TextAnimation(ByeText);
+                    gameIsActive = false;
+                }
+
+                Console.ReadKey();
+                Console.ResetColor();
+                Program.ResetLevel();
+            }
+        }
+
+        static private void StartGameButton()
+        {
+            isBack = false;
+            MakeMenu(levelSelection);
+            Console.Clear();
+            switch (currentSection)
+            {
+                case 0:
+                    Program.level1 = true;
+                    break;
+                case 1:
+                    Program.level2 = true;
+                    break;
+                case 2:
+                    Program.level3 = true;
+                    break;
+                
+                case 3:
+                    isBack = true;
+                    currentSection = 0;
+                    break;
+            }
+            if (!isBack)
+                Program.Game();
+        }
+        static private void GameSpeedButton()
+        {
+            MakeMenu(gameSpeedSettings);
+            Console.Clear();
+            switch (currentSection)
+
+            {
+                case 0:
+                    Program.gameSpeed = 40;
+                    break;
+                case 1:
+                    Program.gameSpeed = 60;
+                    break;
+                case 2:
+                    Program.gameSpeed = 80;
+                    break;
+                case 3:
+                    currentSection = 1;
+                    isSelected = true;
+                    break;
+            }
+        }
+        static private void DifficultyButton()
+        {
+            MakeMenu(difficultySeceltion);
+            Console.Clear();
+            switch (currentSection)
+            {
+                case 0:
+                    Program.isHard = false;
+                    break;
+                case 1:
+                    Program.isHard = true;
+                    break;
+                case 2:
+                    currentSection = 1;
+                    isSelected = true;
+                    break;
             }
         }
     }
+}

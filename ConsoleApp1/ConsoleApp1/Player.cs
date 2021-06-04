@@ -19,40 +19,28 @@ namespace ConsoleApp1
                 case ConsoleKey.W:
                 case ConsoleKey.UpArrow:
                     {
-                        if (!Plane.walls.Any(el => el.position == 
-                                                   new Cell((byte)(position.X - 1), position.Y)) &&
-                            !Plane.bricks.Any(el => el.position ==
-                                                   new Cell((byte)(position.X - 1), position.Y)))
+                        if (!BarrierSearcher.BarrierIsNear(-1, 0, position))
                             position.X--;
                         break;
                     }
                 case ConsoleKey.A:
                 case ConsoleKey.LeftArrow:
                     {
-                        if (!Plane.walls.Any(el => el.position == 
-                                                   new Cell(position.X, (byte)(position.Y - 1))) &&
-                            !Plane.bricks.Any(el => el.position ==
-                                                   new Cell(position.X, (byte)(position.Y - 1))))
+                        if (!BarrierSearcher.BarrierIsNear(0, -1, position))
                             position.Y--;
                         break;
                     }
                 case ConsoleKey.S:
                 case ConsoleKey.DownArrow:
                     {
-                        if (!Plane.walls.Any(el => el.position == 
-                                                   new Cell((byte)(position.X + 1), position.Y)) &&
-                            !Plane.bricks.Any(el => el.position ==
-                                                   new Cell((byte)(position.X + 1), position.Y)))
+                        if (!BarrierSearcher.BarrierIsNear(1, 0, position))
                             position.X++;
                         break;
                     }
                 case ConsoleKey.D:
                 case ConsoleKey.RightArrow:
                     {
-                        if (!Plane.walls.Any(el => el.position == 
-                                                   new Cell(position.X, (byte)(position.Y + 1))) &&
-                            !Plane.bricks.Any(el => el.position ==
-                                                   new Cell(position.X, (byte)(position.Y + 1))))
+                        if (!BarrierSearcher.BarrierIsNear(0, 1, position))
                             position.Y++;
                         break;
                     }
@@ -94,23 +82,14 @@ namespace ConsoleApp1
             public void Explosion()
             {
                 if (_explosionTime == 0)
-                {
+                {                    
                     Media.explosionSound.Play();
                     Console.ForegroundColor = Console.BackgroundColor = ConsoleColor.Yellow;
                    
                     Bang(' ');
                     Console.BackgroundColor = ConsoleColor.Black;
 
-                         if(Player.position.X == position.X &&
-                            Player.position.Y == position.Y)
-                                isAlive = false;
-                         for (int i = 0; i < Program.enemies.Count; i++)
-                             if(Program.enemies.Any(el => el.position.X == position.X &&
-                                                          el.position.Y == position.Y))
-                        {
-                            Program.enemies.Remove(new Enemy(new Cell(position.X,
-                                                                      position.Y)));
-                        }                                
+                    DeathFromBang(0, 0);
 
                     Thread.Sleep(50);
                     Bang('+');
@@ -119,7 +98,6 @@ namespace ConsoleApp1
                     Thread.Sleep(50);
                     Bang(' ');
                     Console.ResetColor();
-                    
                 }
                 else
                     _explosionTime--;
@@ -129,311 +107,74 @@ namespace ConsoleApp1
             {
                 Console.SetCursorPosition(position.Y, position.X);
                 Console.Write(str);
-                RightBang(str);
-                LeftBang(str);
-                DownBang(str);
-                UpBang(str);                
+                AllSidesBang(str,  0,  1, explosionFramesR);
+                explosionFramesR++;
+
+                AllSidesBang(str,  0, -1, explosionFramesL);
+                explosionFramesL++;
+
+                AllSidesBang(str,  1,  0, explosionFramesB);
+                explosionFramesB++;
+
+                AllSidesBang(str, -1,  0, explosionFramesT);
+                explosionFramesT++;
             }
 
-            private void RightBang(char str)
+            private void AllSidesBang(char str, sbyte x, sbyte y, byte explosionFrame )
             {
-                if (Plane.bricks.Any(el => el.position ==
-                                           new Cell(this.position.X, (byte)(this.position.Y + 1))))
+                if (BarrierSearcher.BarrierIsNear(x, y, position, Plane.bricks))
                 {
-                    if (explosionFramesR == 4)
+                    if (explosionFrame == 4)
                     {
                         Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
-                                                                              new Cell(this.position.X, (byte)(this.position.Y + 1))));                      
+                                                                              new Cell((byte)(position.X + x), (byte)(position.Y + y))));
                     }
-                    explosionFramesR++;
-                    Console.SetCursorPosition(position.Y + 1, position.X);
-                    Console.Write(str);
+                    DrawFire(x, y, str);
                 }
-                else if (!Plane.bricks.Any(el => el.position ==
-                                                 new Cell(this.position.X, (byte)(this.position.Y + 1))) &&
-                          !Plane.walls.Any(el => el.position ==
-                                                 new Cell(this.position.X, (byte)(this.position.Y + 1))) &&
-                          Plane.bricks.Any(el => el.position ==
-                                                 new Cell(this.position.X, (byte)(this.position.Y + 2))))
-                {
 
-                    if (explosionFramesR == 4)
-                    {
-                        Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
-                                                                              new Cell(this.position.X, (byte)(this.position.Y + 2))));
-                    }
-                    explosionFramesR++;
-
-                    Console.SetCursorPosition(position.Y + 1, position.X);
-                    Console.Write(str);
-                    Console.SetCursorPosition(position.Y + 2, position.X);
-                    Console.Write(str);
-                }
-                else if (!Plane.walls.Any(el => el.position ==
-                                                     new Cell(this.position.X, (byte)(this.position.Y + 1))))
+                else if (!BarrierSearcher.BarrierIsNear(x, y, position) &&
+                          BarrierSearcher.BarrierIsNear((sbyte)(2 * x), (sbyte)(2 * y), position, Plane.bricks))
                 {
-                    if (Player.position.X == position.X &&
-                        Player.position.Y == position.Y + 1)
-                        isAlive = false;
-                    else if (Program.enemies.Any(el => el.position.X == position.X &&
-                                                       el.position.Y == position.Y + 1))
-                    {
-                        for (int i = 0; i < Program.enemies.Count; i++)
-                            if (Program.enemies.Any(el => el.position.X == position.X &&
-                                                          el.position.Y == position.Y + 1))
-                            {
-                                Program.enemies.Remove(Program.enemies.FirstOrDefault(el => el.position ==
-                                                                                            new Cell(position.X, (byte)(position.Y + 1))));
-                            }
-                    }
-                    Console.SetCursorPosition(position.Y + 1, position.X);
-                    Console.Write(str);
-                    if (!Plane.walls.Any(el => el.position ==
-                                               new Cell(position.X, (byte)(position.Y + 2))))
-                    {
-                        if (Player.position.X == position.X &&
-                           Player.position.Y == position.Y + 2)
-                            isAlive = false;
-                        else if (Program.enemies.Any(el => el.position.X == position.X &&
-                                                   el.position.Y == position.Y + 2))
-                        {
-                            for (int i = 0; i < Program.enemies.Count; i++)
-                                if (Program.enemies.Any(el => el.position.X == position.X &&
-                                                              el.position.Y == position.Y + 2))
-                                {
-                                    Program.enemies.Remove(Program.enemies.FirstOrDefault(el => el.position ==
-                                                                               new Cell(this.position.X, (byte)(this.position.Y + 2))));
-                                }
-                        }
-                        Console.SetCursorPosition(position.Y + 2, position.X);
-                        Console.Write(str);
-                    }
+                     if (explosionFrame == 4)
+                     {
+                         Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
+                                                                               new Cell((byte)(position.X + 2 * x), (byte)(position.Y + 2 * y))));
+                     }
+                     DrawFire(x, y, str);
+                     DrawFire((sbyte)(2*x), (sbyte)(2 * y), str);
                 }
+
+                else if (!BarrierSearcher.BarrierIsNear(x, y, position, Plane.walls))
+                {
+                     DeathFromBang(x, y);
+
+                     DrawFire(x, y, str);
+                     if (!BarrierSearcher.BarrierIsNear((sbyte)(2 * x), (sbyte)(2 * y), position, Plane.walls))
+                     {
+                        DeathFromBang((sbyte)(2 * x), (sbyte)(2 * y));
+
+                        DrawFire((sbyte)(2 * x), (sbyte)(2 * y), str);
+                     }
+                 }
             }
-            private void LeftBang(char str)
+
+            private void DrawFire(sbyte x, sbyte y, char str)
             {
-                if (Plane.bricks.Any(el => el.position ==
-                                           new Cell(this.position.X, (byte)(this.position.Y - 1))))
-                {
-                    if (explosionFramesL == 4)
-                    {
-                        Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
-                                                                               new Cell(this.position.X, (byte)(this.position.Y - 1))));
-                    }
-                    explosionFramesL++;
-
-                    Console.SetCursorPosition(position.Y - 1, position.X);
-                    Console.Write(str);
-                }
-                else if (!Plane.bricks.Any(el => el.position ==
-                                                 new Cell(this.position.X, (byte)(this.position.Y - 1))) &&
-                         !Plane.walls.Any(el => el.position ==
-                                                new Cell(this.position.X, (byte)(this.position.Y - 1))) &&
-                          Plane.bricks.Any(el => el.position ==
-                                                 new Cell(this.position.X, (byte)(this.position.Y - 2))))
-                {
-                    if (explosionFramesL == 4)
-                    {
-                        Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
-                                                                               new Cell(this.position.X, (byte)(this.position.Y - 2))));
-                    }
-                    explosionFramesL++;
-                    Console.SetCursorPosition(position.Y - 1, position.X);
-                    Console.Write(str);
-                    Console.SetCursorPosition(position.Y - 2, position.X);
-                    Console.Write(str);
-                }
-                else if (!Plane.walls.Any(el => el.position ==
-                                                new Cell(this.position.X, (byte)(this.position.Y - 1))))
-                {
-                    if (Player.position.X == position.X &&
-                       Player.position.Y == position.Y - 1)
-                        isAlive = false;
-
-                    else if (Program.enemies.Any(el => el.position.X == position.X &&
-                                                       el.position.Y == position.Y - 1))
-                    {
-                        for (int i = 0; i < Program.enemies.Count; i++)
-                            if (Program.enemies.Any(el => el.position.X == position.X &&
-                                                          el.position.Y == position.Y - 1))
-                            {
-                                Program.enemies.Remove(Program.enemies.FirstOrDefault(el => el.position ==
-                                                                           new Cell(position.X, (byte)(position.Y - 1))));
-                            }
-                    }
-                    Console.SetCursorPosition(position.Y - 1, position.X);
-                    Console.Write(str);
-                    if (!Plane.walls.Any(el => el.position ==
-                                               new Cell(position.X, (byte)(position.Y - 2))))
-                    {
-                        if (Player.position.X == position.X &&
-                           Player.position.Y == position.Y - 2)
-                            isAlive = false;
-                        else if (Program.enemies.Any(el => el.position.X == position.X &&
-                                                           el.position.Y == position.Y - 2))
-                        {
-                            for (int i = 0; i < Program.enemies.Count; i++)
-                                if (Program.enemies.Any(el => el.position.X == position.X &&
-                                                              el.position.Y == position.Y - 2))
-                                {
-                                    Program.enemies.Remove(Program.enemies.FirstOrDefault(el => el.position ==
-                                                                                new Cell(position.X, (byte)(position.Y - 2))));
-                                }
-                        }
-                        Console.SetCursorPosition(position.Y - 2, position.X);
-                        Console.Write(str);
-                    }
-                }
+                Console.SetCursorPosition(position.Y + y, position.X + x);
+                Console.Write(str);
             }
-            private void DownBang(char str)
+
+            private void DeathFromBang(sbyte x , sbyte y)
             {
-                if (Plane.bricks.Any(el => el.position ==
-                                           new Cell((byte)(this.position.X + 1), this.position.Y)))
+                if (Player.position.X == position.X + x && 
+                    Player.position.Y == position.Y + y)
+                    isAlive = false;
+                else if (Program.enemies.Any(el => el.position.X == position.X + x &&  
+                                                   el.position.Y == position.Y + y))
                 {
-                    if (explosionFramesB == 4)
-                    {
-                        Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
-                                                                               new Cell((byte)(this.position.X + 1), this.position.Y)));
-                    }
-                    explosionFramesB++;
-                    Console.SetCursorPosition(position.Y, position.X + 1);
-                    Console.Write(str);
-                }
-                else if (!Plane.bricks.Any(el => el.position ==
-                                                 new Cell((byte)(this.position.X + 1), this.position.Y)) &&
-                         !Plane.walls.Any(el => el.position ==
-                                                new Cell((byte)(this.position.X + 1), this.position.Y)) &&
-                          Plane.bricks.Any(el => el.position ==
-                                                 new Cell((byte)(this.position.X + 2), this.position.Y)))
-                {
-                    if (explosionFramesB == 4)
-                    {
-                        Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
-                                                                          new Cell((byte)(this.position.X + 2), this.position.Y)));
-                    }
-                    explosionFramesB++;
-                    Console.SetCursorPosition(position.Y, position.X + 1);
-                    Console.Write(str);
-                    Console.SetCursorPosition(position.Y, position.X + 2);
-                    Console.Write(str);
-                }
-                else if (!Plane.walls.Any(el => el.position ==
-                                                new Cell((byte)(this.position.X + 1), this.position.Y)))
-                {
-                    if (Player.position.X == position.X + 1 &&
-                       Player.position.Y == position.Y)
-                        isAlive = false;
-
-                    else if (Program.enemies.Any(el => el.position.X == position.X + 1 &&
-                                                       el.position.Y == position.Y))
-                    {
-                        for (int i = 0; i < Program.enemies.Count; i++)
-                            if (Program.enemies.Any(el => el.position.X == position.X + 1 &&
-                                                          el.position.Y == position.Y))
-                            {
-                                Program.enemies.Remove(Program.enemies.FirstOrDefault(el => el.position ==
-                                                                            new Cell((byte)(position.X + 1), position.Y)));
-                            }
-                    }
-                    Console.SetCursorPosition(position.Y, this.position.X + 1);
-                    Console.Write(str);
-                    if (!Plane.walls.Any(el => el.position ==
-                                               new Cell((byte)(this.position.X + 2), position.Y)))
-                    {
-                        if (Player.position.X == position.X + 2 &&
-                           Player.position.Y == position.Y)
-                            isAlive = false;
-                        else if (Program.enemies.Any(el => el.position.X == position.X + 2 &&
-                                                           el.position.Y == position.Y))
-                        {
-                            for (int i = 0; i < Program.enemies.Count; i++)
-                                if (Program.enemies.Any(el => el.position.X == position.X + 2 &&
-                                                              el.position.Y == position.Y))
-                                {
-                                    Program.enemies.Remove(Program.enemies.FirstOrDefault(el => el.position ==
-                                                                               new Cell((byte)(this.position.X + 2), this.position.Y)));
-                                }
-                        }
-                        Console.SetCursorPosition(position.Y, position.X + 2);
-                        Console.Write(str);
-                    }
-                }
-            }
-            private void UpBang(char str)
-            {
-                if (Plane.bricks.Any(el => el.position ==
-                                                           new Cell((byte)(this.position.X - 1), this.position.Y)))
-                {
-                    if (explosionFramesT == 4)
-                    {
-                        Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
-                                                                               new Cell((byte)(this.position.X - 1), this.position.Y)));
-                    }
-                    explosionFramesT++;
-                    Console.SetCursorPosition(position.Y, position.X - 1);
-                    Console.Write(str);
-                }
-                else if (!Plane.bricks.Any(el => el.position ==
-                                                 new Cell((byte)(this.position.X - 1), this.position.Y)) &&
-                         !Plane.walls.Any(el => el.position ==
-                                                 new Cell((byte)(this.position.X - 1), this.position.Y)) &&
-                          Plane.bricks.Any(el => el.position ==
-                                                 new Cell((byte)(this.position.X - 2), this.position.Y)))
-                {
-                    if (explosionFramesT == 4)
-                    {
-                        Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
-                                                                               new Cell((byte)(this.position.X - 2), this.position.Y)));
-                    }
-                    explosionFramesT++;
-                    Console.SetCursorPosition(position.Y, position.X - 1);
-                    Console.Write(str);
-                    Console.SetCursorPosition(position.Y, position.X - 2);
-                    Console.Write(str);
-                }
-                else if (!Plane.walls.Any(el => el.position ==
-                                                new Cell((byte)(this.position.X - 1), this.position.Y)))
-                {
-                    if (Player.position.X == position.X - 1 &&
-                       Player.position.Y == position.Y)
-                        isAlive = false;
-                    else if (Program.enemies.Any(el => el.position.X == position.X - 1 &&
-                                                      el.position.Y == position.Y))
-                    {
-                        for (int i = 0; i < Program.enemies.Count; i++)
-                            if (Program.enemies.Any(el => el.position.X == position.X - 1 &&
-                                                          el.position.Y == position.Y))
-                            {
-                                Program.enemies.Remove(Program.enemies.FirstOrDefault(el => el.position ==
-                                                                           new Cell((byte)(this.position.X - 1), this.position.Y)));
-                            }
-                    }
-                    Console.SetCursorPosition(position.Y, this.position.X - 1);
-                    Console.Write(str);
-                    if (!Plane.walls.Any(el => el.position ==
-                                              new Cell((byte)(this.position.X - 2), position.Y)))
-                    {
-                        if (Player.position.X == position.X - 2 &&
-                           Player.position.Y == position.Y)
-                            isAlive = false;
-
-                        else if (Program.enemies.Any(el => el.position.X == position.X - 2 &&
-                                                         el.position.Y == position.Y))
-                        {
-                            for (int i = 0; i < Program.enemies.Count; i++)
-                                if (Program.enemies.Any(el => el.position.X == position.X - 2 &&
-                                                              el.position.Y == position.Y))
-                                {
-                                    Program.enemies.Remove(Program.enemies.FirstOrDefault(el => el.position ==
-                                                                               new Cell((byte)(this.position.X - 2), this.position.Y)));
-                                }
-                        }
-                        Console.SetCursorPosition(position.Y, position.X - 2);
-                        Console.Write(str);
-                    }
-
-                }
-                Console.SetCursorPosition(0, Plane.position.X + 1);
+                    Program.enemies.Remove(Program.enemies.FirstOrDefault(el => el.position ==
+                                                                                new Cell((byte)(position.X + x), (byte)(position.Y + y))));
+                }                    
             }
 
             public void ExplosionAnimation()
@@ -442,7 +183,7 @@ namespace ConsoleApp1
                 Thread thread = new Thread(thread1);
                 thread.Start();
                 Console.SetCursorPosition(0, Plane.position.X + 1);
-                thread.Join(150);
+                thread.Join( 145 );
             }
         }
     }

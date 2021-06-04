@@ -8,5 +8,9 @@ namespace ConsoleApp1
         static public SoundPlayer mainTheme = new SoundPlayer(@"sound\mainTheme.wav");
         static public SoundPlayer gameOverSound = new SoundPlayer(@"sound\HALO.wav");
         static public SoundPlayer explosionSound = new SoundPlayer(@"sound\explosion.wav");
+
+        static public string level1 = @"Levels\level1.txt";
+        static public string level2 = @"Levels\level2.txt";
+        static public string level3 = @"Levels\level3.txt";
     }
 }

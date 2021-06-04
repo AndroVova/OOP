@@ -16,7 +16,6 @@ namespace ConsoleApp1
 
     class PathFinding
     {
-        
         static public List<Location> CalculateIdealPath(Enemy enemy)
         {
             var start = new Location
@@ -58,8 +57,8 @@ namespace ConsoleApp1
                                                         el.Y == neighborSquare.Y) != null)
                         continue;
 
-                    if (openList.FirstOrDefault(l => l.X == neighborSquare.X &&
-                                                     l.Y == neighborSquare.Y) == null)
+                    if (openList.FirstOrDefault(el => el.X == neighborSquare.X &&
+                                                      el.Y == neighborSquare.Y) == null)
                     {
                         neighborSquare.G = g;
                         neighborSquare.H = ComputeHScore(neighborSquare.X, neighborSquare.Y, target.X, target.Y);
@@ -78,56 +77,44 @@ namespace ConsoleApp1
                 current = current.Parent;
             }
             return truePath;
-
         }
 
-        static List<Location> GetNeighborSquares(int x, int y, List<Location> openList)
+       
+
+        static private List<Location> GetNeighborSquares(int x, int y, List<Location> openList)
         {
-            List<Location> list = new List<Location>();
+            List<Location> resultList = new List<Location>();
+            Cell position = new Cell((byte)x, (byte)y);
+            NeighborSquare( 0,  1, position, openList, resultList);
 
-            if ((!Plane.walls.Any(el => el.position == new Cell((byte)x, (byte)(y + 1))) &&
-                !Plane.bricks.Any(el => el.position == new Cell((byte)x, (byte)(y + 1)))) ||
-                 Plane.empty.Any(el => el.position == new Cell((byte)x, (byte)(y + 1))) &&
-                     !Program.enemies.Any(el => el.position == new Cell((byte)x, (byte)(y + 1))))
-            {
-                Location node = openList.Find(el => el.X == x && el.Y == y + 1);
-                if (node == null) list.Add(new Location() { X = x, Y = y + 1 });
-                else list.Add(node);
-            }
+            NeighborSquare( 0, -1, position, openList, resultList);
 
-            if ((!Plane.walls.Any(el => el.position == new Cell((byte)x, (byte)(y - 1))) &&
-                !Plane.bricks.Any(el => el.position == new Cell((byte)x, (byte)(y - 1)))) ||
-                 Plane.empty.Any(el => el.position == new Cell((byte)x, (byte)(y - 1))) &&
-                    !Program.enemies.Any(el => el.position == new Cell((byte)x, (byte)(y - 1))))
-            {
-                Location node = openList.Find(el => el.X == x && el.Y == y - 1);
-                if (node == null) list.Add(new Location() { X = x, Y = y - 1 });
-                else list.Add(node);
-            }
+            NeighborSquare(-1,  0, position, openList, resultList);
 
-            if ((!Plane.walls.Any(el => el.position == new Cell((byte)(x - 1), (byte)y)) &&
-                !Plane.bricks.Any(el => el.position == new Cell((byte)(x - 1), (byte)y))) ||
-                 Plane.empty.Any(el => el.position == new Cell((byte)(x - 1), (byte)y)) &&
-                 !Program.enemies.Any(el => el.position == new Cell((byte)(x - 1), (byte)y)))
-            {
-                Location node = openList.Find(el => el.X == x - 1 && el.Y == y);
-                if (node == null) list.Add(new Location() { X = x - 1, Y = y });
-                else list.Add(node);
-            }
+            NeighborSquare( 1,  0, position, openList, resultList);
 
-            if ((!Plane.walls.Any(el => el.position == new Cell((byte)(x + 1), (byte)y)) &&
-                !Plane.bricks.Any(el => el.position == new Cell((byte)(x + 1), (byte)y))) ||
-                 Plane.empty.Any(el => el.position == new Cell((byte)(x + 1), (byte)y)) &&
-                 !Program.enemies.Any(el => el.position == new Cell((byte)(x + 1), (byte)y)))
-            {
-                Location node = openList.Find(el => el.X == x + 1 && el.Y == y);
-                if (node == null) list.Add(new Location() { X = x + 1, Y = y });
-                else list.Add(node);
-            }
-            return list;
+            return resultList;
         }
 
-        static int ComputeHScore(int x, int y, int targetX, int targetY)
+        static private void NeighborSquare(sbyte x, sbyte y, Cell position, List<Location> openList, List<Location> list)
+        {
+            if (!BarrierSearcher.BarrierIsNear(x, y, position) &&
+                !Program.enemies.Any(el => el.position == new Cell((byte)(position.X + x), (byte)(position.Y + y))))
+            {
+                Location node = openList.Find(el => el.X == position.X + x &&
+                                                    el.Y == position.Y + y);
+                if (node == null)
+                    list.Add(new Location()
+                    {
+                        X = position.X + x,
+                        Y = position.Y + y
+                    });
+                else
+                    list.Add(node);
+            }
+        }
+
+        static private int ComputeHScore(int x, int y, int targetX, int targetY)
         {
             return Math.Abs(targetX - x) + Math.Abs(targetY - y);
         }

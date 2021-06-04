@@ -9,31 +9,31 @@ namespace ConsoleApp1
         static public Cell position = new Cell(0, 0);
         static public List<Wall> walls = new List<Wall>();
         static public List<Wall> bricks = new List<Wall>();
-        static public List<Wall> empty = new List<Wall>();
 
         static public void MakeField()
-        {            
-
+        {
+            LoadLevel();
+            Console.SetCursorPosition(0, 0);
             for (byte i = 0; i < position.X; i++)
             {
                 for (byte j = 0; j < position.Y; j++)
                 {
                     Console.ResetColor();
-                    if ((i < 1 || i == position.X - 1) ||
-                        (j < 2 || j > position.Y - 3))
+                    if (BarrierSearcher.BarrierIsNear(0,0,new Cell(i,j),walls))
                     {
-                        walls.Add(new Wall(new Cell(i, j)));
-                        Console.BackgroundColor = ConsoleColor.Red;
+                        if ((i < 1 || i == position.X - 1) ||
+                            (j < 2 || j  > position.Y - 3))
+                        {
+                            Console.BackgroundColor = ConsoleColor.Red;
+                        }
+                        else
+                            Console.BackgroundColor = ConsoleColor.White;
                         Console.Write(" ");
                     }
-                    else if ((i >= 2 && i < position.X - 2) &&
-                             (j >= 4 && j < position.Y - 4) &&
-                              i % 2 == 0 &&
-                              j % 2 == 0)
+                    else if (BarrierSearcher.BarrierIsNear(0, 0, new Cell(i, j), bricks))
                     {
-                        walls.Add(new Wall(new Cell(i, j)));
-                        Console.BackgroundColor = ConsoleColor.White;
-                        Console.Write(" ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Write("░");
                     }
                     else if (i == Player.position.X &&
                              j == Player.position.Y)
@@ -45,47 +45,36 @@ namespace ConsoleApp1
                                                        el.position.Y == j))
                     {
                         Console.ForegroundColor = ConsoleColor.Blue;
-                        Console.Write("@");
+                        Console.Write("☻");
                     }
-                    else if ((i == Program.teleport.positionIn.X  && j == Program.teleport.positionIn.Y) ||
+                    else if ((i == Program.teleport.positionIn.X && j == Program.teleport.positionIn.Y) ||
                              (i == Program.teleport.positionOut.X && j == Program.teleport.positionOut.Y))
                     {
                         Console.BackgroundColor = ConsoleColor.Cyan;
                         Console.ForegroundColor = ConsoleColor.DarkMagenta;
                         Console.Write("▀");
                     }
-                    else if (( i >= 1 && i <= position.X &&
-                            ((j >= 2 && j <= 3)         ||
-                              j <= position.Y - 3 && j >= position.Y - 4)) &&
-                              (Program.level2 || Program.level3))
-                    {
-                        empty.Add(new Wall(new Cell(i, j)));
-                        Console.Write(" ");
-                    }
-                    else if ((((i + 1) % 4 == 0 && position.X - i > 4 &&  j >= 7 && j <= position.Y - 8) ||
-                             (      i >= 3 && i < position.X - 5      && (j == 5 || j == position.Y - 6))) && Program.level3 )
-                    {
-                        empty.Add(new Wall(new Cell(i, j)));
-                        Console.Write(" ");
-                    }
                     else
-                    {
-                        if (Program.level1)
-                        {
-                            empty.Add(new Wall(new Cell(i, j)));
-                            Console.Write(" ");
-                        }
-                        else
-                        {
-                            bricks.Add(new Wall(new Cell(i, j)));
-                            Console.ForegroundColor = ConsoleColor.White;
-                            Console.Write("░");
-                        }
+                        Console.Write(" ");
 
-                    }
+                   
                 }
                 Console.WriteLine();
             }
+            Console.ResetColor();
+        }
+        static private void LoadLevel()
+        {
+            string[] str;
+            if (Program.level1)
+                str = WorkWithFile.ReadTXT(Media.level1);
+            else if (Program.level2)
+                str = WorkWithFile.ReadTXT(Media.level2);
+            else
+                str = WorkWithFile.ReadTXT(Media.level3);
+
+            var field = WorkWithFile.ConvertToArray(str);
+            WorkWithFile.IdentifyCells(field);
         }
         public class Wall
         {

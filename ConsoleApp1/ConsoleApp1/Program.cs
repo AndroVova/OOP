@@ -11,25 +11,17 @@ namespace ConsoleApp1
     class Program
     {
         public static List<Enemy> enemies = new List<Enemy>();
-        static public Teleporter teleport = new Teleporter(new Cell(5, 2), new Cell(15, 25));
-
-        static public Enemy enemy1 = new Enemy(new Cell(0, 0));
-        static public Enemy enemy2 = new Enemy(new Cell(0, 0));
-        static public Enemy enemy3 = new Enemy(new Cell(0, 0));
-        static public Enemy enemy4 = new Enemy(new Cell(0, 0));
-        static public Enemy enemy5 = new Enemy(new Cell(0, 0));
-        static public Enemy enemy6 = new Enemy(new Cell(0, 0));
-        static public Enemy enemy7 = new Enemy(new Cell(0, 0));
-
+        static public Teleporter teleport = new Teleporter(new Cell(6, 2), new Cell(15, 25));
 
         static public bool level1 = false;
         static public bool level2 = false;
         static public bool level3 = false;
-        static public bool isHard = false;
-        static public bool isBack = false;
+        static public bool level4 = false;
+        static public bool isHard = false;        
+
         private static bool changeColor = true;
 
-        static private byte enemiesNumber;
+        static public byte enemiesNumber;
         static public int gameSpeed = 60;
 
         static void Main()
@@ -37,234 +29,27 @@ namespace ConsoleApp1
             Console.CursorVisible = false;
 
             Media.titleSound.PlayLooping();
-            string bomberManText =
-                   "\n" +
-                   "\n" +
-                   "\n" +
-                   "\n" +
-                   "\n" +
-                   "            ▀█████████▄   ▄██████▄    ▄▄▄▄███▄▄▄▄   ▀█████████▄     ▄████████    ▄████████ \n" +
-                   "              ███    ███ ███    ███ ▄██▀▀▀███▀▀▀██▄   ███    ███   ███    ███   ███    ███ \n" +
-                   "              ███    ███ ███    ███ ███   ███   ███   ███    ███   ███    █▀    ███    ███ \n" +
-                   "             ▄███▄▄▄██▀  ███    ███ ███   ███   ███  ▄███▄▄▄██▀   ▄███▄▄▄      ▄███▄▄▄▄██▀ \n" +
-                   "            ▀▀███▀▀▀██▄  ███    ███ ███   ███   ███ ▀▀███▀▀▀██▄  ▀▀███▀▀▀     ▀▀███▀▀▀▀▀   \n" +
-                   "              ███    ██▄ ███    ███ ███   ███   ███   ███    ██▄   ███    █▄  ▀███████████ \n" +
-                   "              ███    ███ ███    ███ ███   ███   ███   ███    ███   ███    ███   ███    ███ \n" +
-                   "            ▄█████████▀   ▀██████▀   ▀█   ███   █▀  ▄█████████▀    ██████████   ███    ███ \n" +
-                   "                                                                                ███    ███ \n" +
-                   "                                                 ▄▄▄▄███▄▄▄▄      ▄████████ ███▄▄▄▄        \n" +
-                   "                                               ▄██▀▀▀███▀▀▀██▄   ███    ███ ███▀▀▀██▄      \n" +
-                   "                                               ███   ███   ███   ███    ███ ███   ███      \n" +
-                   "                                               ███   ███   ███   ███    ███ ███   ███      \n" +
-                   "                                               ███   ███   ███ ▀███████████ ███   ███      \n" +
-                   "                                               ███   ███   ███   ███    ███ ███   ███      \n" +
-                   "                                               ███   ███   ███   ███    ███ ███   ███      \n" +
-                   "                                                ▀█   ███   █▀    ███    █▀   ▀█   █▀       \n" +
-                   "\n" +
-                   "                                   press enter to start                                    \n" +
-                   "\n";
-
-            TextAnimation(bomberManText);
+            
+            TextAnimation(Menu.bomberManText);
             Console.ReadLine();
             Console.Clear();
 
-            string enterNameText =
-                "\n" +
-                "\n" +
-            "       ██████  ██       █████  ██    ██ ███████ ██████         ███████ ███    ██ ████████ ███████ ██████  \n" +
-            "       ██   ██ ██      ██   ██  ██  ██  ██      ██   ██        ██      ████   ██    ██    ██      ██   ██ \n" +
-            "       ██████  ██      ███████   ████   █████   ██████         █████   ██ ██  ██    ██    █████   ██████  \n" +
-            "       ██      ██      ██   ██    ██    ██      ██   ██        ██      ██  ██ ██    ██    ██      ██   ██ \n" +
-            "       ██      ███████ ██   ██    ██    ███████ ██   ██ ▄█     ███████ ██   ████    ██    ███████ ██   ██ \n" +
-            "\n" +
-            "\n" +
-            "               ██    ██  ██████  ██    ██ ██████      ███    ██  █████  ███    ███ ███████  \n" +
-            "                ██  ██  ██    ██ ██    ██ ██   ██     ████   ██ ██   ██ ████  ████ ██       \n" +
-            "                 ████   ██    ██ ██    ██ ██████      ██ ██  ██ ███████ ██ ████ ██ █████    \n" +
-            "                  ██    ██    ██ ██    ██ ██   ██     ██  ██ ██ ██   ██ ██  ██  ██ ██       \n" +
-            "                  ██     ██████   ██████  ██   ██     ██   ████ ██   ██ ██      ██ ███████  \n";
-            Console.WriteLine(enterNameText);
+            Console.WriteLine(Menu.enterNameText);
             Console.SetCursorPosition(50, 16);
             Player.name = Console.ReadLine();
             Console.Clear();
 
             Media.titleSound.Stop();
-            bool gameIsActive = true;
-            while (gameIsActive)
-            {
-                Media.mainTheme.PlayLooping();
-                Menu.MakeMenu(Menu.menu);
-                Console.Clear();
 
-                if (Menu.currentSection == 0)
-                {
-                    isBack = false;
-                    Menu.MakeMenu(Menu.levelSelection);
-                    Console.Clear();
-                    switch (Menu.currentSection)
-                    {
-                        case 0:
-                            level1 = true;
-                            break;
-                        case 1:
-                            level2 = true;
-                            break;
-                        case 2:
-                            level3 = true;
-                            break;
-                        case 3:
-                            isBack = true;
-                            Menu.currentSection = 0;
-                            continue;
-                    }
-                    if (!isBack)
-                        Game();
-                }
-                else if (Menu.currentSection == 1)
-                {
-                    Menu.MakeMenu(Menu.settings);
-                    Console.Clear();
-                    switch (Menu.currentSection)
-                    {
-                        case 0:
-                            Menu.ViewControls();
-                            Console.Clear();
-                            Menu.currentSection = 1;
-                            Menu.isSelected = true;
-                            continue;
-                        case 1:
-                            Menu.MakeMenu(Menu.gameSpeedSettings);
-                            Console.Clear();
-                            switch (Menu.currentSection)
-
-                            {
-                                case 0:
-                                    gameSpeed = 40;
-                                    break;
-                                case 1:
-                                    gameSpeed = 60;
-                                    break;
-                                case 2:
-                                    gameSpeed = 80;
-                                    break;
-                                case 3:
-                                    Menu.currentSection = 1;
-                                    Menu.isSelected = true;
-                                    break;
-                            }
-                            continue;
-                        case 2:
-                            Menu.MakeMenu(Menu.difficultySeceltion);
-                            Console.Clear();
-                            switch (Menu.currentSection)
-                            {
-                                case 0:
-                                    isHard = false; ;
-                                    break;
-                                case 1:
-                                    isHard = true;
-                                    break;
-                                case 2:
-                                    Menu.currentSection = 1;
-                                    Menu.isSelected = true;
-                                    break;
-                            }
-                            continue;
-                        case 3:
-                            Menu.currentSection = 1;
-                            continue;
-                    }
-                }
-                else if (Menu.currentSection == 2)
-                {
-                    DrawRating();
-                    Console.ReadLine();
-                    Console.Clear();
-                    continue;
-                }
-                else if (Menu.currentSection == 3)
-                {
-                    Console.SetWindowSize(100, 30);
-                    string str = ("\n" +
-                                  "\n" +
-                                  "\n" +
-                                  "\n" +
-                                  "            ▀█████████▄  ▄██   ▄      ▄████████    \n" +
-                                  "              ███    ███ ███   ██▄   ███    ███    \n" +
-                                  "              ███    ███ ███▄▄▄███   ███    █▀     \n" +
-                                  "             ▄███▄▄▄██▀  ▀▀▀▀▀▀███  ▄███▄▄▄        \n" +
-                                  "            ▀▀███▀▀▀██▄  ▄██   ███ ▀▀███▀▀▀       \n" +
-                                  "              ███    ██▄ ███   ███   ███    █▄    \n" +
-                                  "              ███    ███ ███   ███   ███    ███   \n" +
-                                  "            ▄█████████▀   ▀█████▀    ██████████   \n" +
-                                  "\n" +
-                                  "                                            ▀█████████▄  ▄██   ▄      ▄████████  \n" +
-                                  "                                             ███    ███ ███   ██▄   ███    ███   \n" +
-                                  "                                             ███    ███ ███▄▄▄███   ███    █▀    \n" +
-                                  "                                            ▄███▄▄▄██▀  ▀▀▀▀▀▀███  ▄███▄▄▄       \n" +
-                                  "                                           ▀▀███▀▀▀██▄  ▄██   ███ ▀▀███▀▀▀      \n" +
-                                  "                                             ███    ██▄ ███   ███   ███    █▄   \n" +
-                                  "                                             ███    ███ ███   ███   ███    ███  \n" +
-                                  "                                           ▄█████████▀   ▀█████▀    ██████████ \n");
-
-                    TextAnimation(str);
-                    gameIsActive = false;
-                }
-
-                Console.ReadKey();
-                Console.ResetColor();
-                ResetLevel();
-            }
+            Menu.MakeMenuStructure();
         }
 
-        static private void Game()
+        static public void Game()
             {
                 Media.mainTheme.Stop();
                 Console.BackgroundColor = Console.ForegroundColor = ConsoleColor.Black;
-
-                Plane.position.X = 25;
-                Plane.position.Y = 29;
-
-                Player.position.X = 9;
-                Player.position.Y = 3;
-
-                enemy1.position.X = 9;
-                enemy1.position.Y = 25;
-
-                enemy2.position.X = 10;
-                enemy2.position.Y = 26;
-
-                if (level3)
-                {
-                    enemy3.position.X = 3;
-                    enemy3.position.Y = 7;
-
-                    enemy4.position.X = 7;
-                    enemy4.position.Y = 12;
-
-                    enemy5.position.X = 11;
-                    enemy5.position.Y = 14;
-
-                    enemy6.position.X = 15;
-                    enemy6.position.Y = 9;
-
-                    enemy7.position.X = 19;
-                    enemy7.position.Y = 8;
-
-                    enemies.Add(enemy3);
-                    enemies.Add(enemy4);
-                    enemies.Add(enemy5);
-                    enemies.Add(enemy6);
-                    enemies.Add(enemy7);
-                }
-
-                enemies.Add(enemy1);
-                enemies.Add(enemy2);
-
-                enemiesNumber = (byte)enemies.Count();
-
+                
                 Plane.MakeField();
-                Console.ResetColor();
 
                 Stopwatch stopWatch = new Stopwatch();
                 stopWatch.Start();
@@ -278,76 +63,14 @@ namespace ConsoleApp1
                     Thread.Sleep(3 * gameSpeed);
                 }
                 stopWatch.Stop();
+
                 Thread.Sleep(100);
                 Console.ResetColor();
                 Console.Clear();
-
-                if (!Player.isAlive)
-                {
-                    Media.gameOverSound.PlayLooping();
-
-                    string loseText = (
-                        "\n" +
-                        "\n" +
-                        "\n" +
-                        "\n" +
-                       "            ▄██████▄     ▄████████   ▄▄▄▄███▄▄▄▄      ▄████████                                   \n" +
-                       "           ███    ███   ███    ███ ▄██▀▀▀███▀▀▀██▄   ███    ███                                   \n" +
-                       "           ███    █▀    ███    ███ ███   ███   ███   ███    █▀                                    \n" +
-                       "          ▄███          ███    ███ ███   ███   ███  ▄███▄▄▄                                       \n" +
-                       "         ▀▀███ ████▄  ▀███████████ ███   ███   ███ ▀▀███▀▀▀                                       \n" +
-                       "           ███    ███   ███    ███ ███   ███   ███   ███    █▄                                    \n" +
-                       "           ███    ███   ███    ███ ███   ███   ███   ███    ███                                   \n" +
-                       "           ████████▀    ███    █▀   ▀█   ███   █▀    ██████████                                   \n" +
-                       "\n" +
-                       "                                                     ▄██████▄   ▄█    █▄     ▄████████    ▄████████ \n" +
-                       "                                                    ███    ███ ███    ███   ███    ███   ███    ███ \n" +
-                       "                                                    ███    ███ ███    ███   ███    █▀    ███    ███ \n" +
-                       "                                                    ███    ███ ███    ███  ▄███▄▄▄      ▄███▄▄▄▄██▀ \n" +
-                       "                                                    ███    ███ ███    ███ ▀▀███▀▀▀     ▀▀███▀▀▀▀▀   \n" +
-                       "                                                    ███    ███ ███    ███   ███    █▄  ▀███████████ \n" +
-                       "                                                    ███    ███ ███    ███   ███    ███   ███    ███ \n" +
-                       "                                                     ▀██████▀   ▀██████▀    ██████████   ███    ███ \n" +
-                       "                                                                                         ███    ███ \n");
-
-                    TextAnimation(loseText);
-                    Media.gameOverSound.Stop();
-
-                }
-                if (enemies.Count == 0 && Player.isAlive)
-                {
-                    Media.mainTheme.PlayLooping();
-                    string winText = (
-                    "\n" +
-                    "\n" +
-                    "\n" +
-                    "\n" +
-                    "               ▄██   ▄    ▄██████▄  ███    █▄                      \n" +
-                    "               ███   ██▄ ███    ███ ███    ███                     \n" +
-                    "               ███▄▄▄███ ███    ███ ███    ███                     \n" +
-                    "               ▀▀▀▀▀▀███ ███    ███ ███    ███                     \n" +
-                    "               ▄██   ███ ███    ███ ███    ███                     \n" +
-                    "               ███   ███ ███    ███ ███    ███                     \n" +
-                    "               ███   ███ ███    ███ ███    ███                     \n" +
-                    "                ▀█████▀   ▀██████▀  ████████▀                      \n" +
-                    "\n" +
-                    "                                    ▄█     █▄   ▄█  ███▄▄▄▄   \n" +
-                    "                                   ███     ███ ███  ███▀▀▀██▄ \n" +
-                    "                                   ███     ███ ███▌ ███   ███ \n" +
-                    "                                   ███     ███ ███▌ ███   ███ \n" +
-                    "                                   ███     ███ ███▌ ███   ███ \n" +
-                    "                                   ███     ███ ███  ███   ███ \n" +
-                    "                                   ███ ▄█▄ ███ ███  ███   ███ \n" +
-                    "                                    ▀███▀███▀  █▀    ▀█   █▀  \n");
-
-                    TimeSpan time = stopWatch.Elapsed;
-                    var newRating = new WorkWithFile();
-                    newRating.AddResults(new GameResults(Player.name, (time.Seconds).ToString(), DateTime.Now, Player.usedBombs));
-
-                    TextAnimation(winText);
-                    Media.mainTheme.Stop();
-                }
+                
+                DrawEndGameText(stopWatch);
             }
+
         static private void DrawPlayerMovement()
             {
                 if (Console.KeyAvailable)
@@ -397,7 +120,7 @@ namespace ConsoleApp1
                     Console.SetCursorPosition(enemies[i].position.Y,
                                               enemies[i].position.X);
                     Console.Write(" ");
-                    enemies[i].OnMove(enemies[i]);
+                    enemies[i].Move();
                 
                     Console.SetCursorPosition(enemies[i].position.Y,
                                               enemies[i].position.X);
@@ -445,9 +168,29 @@ namespace ConsoleApp1
                 Console.SetCursorPosition(0, Plane.position.X + 1);
                 Console.ResetColor();
             }
-        private static void TextAnimation(string str)
+        private static void DrawEndGameText(Stopwatch stopWatch)
+        {
+            if (!Player.isAlive)
             {
-                while (!Console.KeyAvailable)
+                Media.gameOverSound.PlayLooping();
+                TextAnimation(Menu.loseText);
+                Media.gameOverSound.Stop();
+            }
+            if (enemies.Count == 0 && Player.isAlive)
+            {
+                Media.mainTheme.PlayLooping();
+
+                TimeSpan time = stopWatch.Elapsed;
+                var newRating = new WorkWithFile();
+                newRating.AddResults(new GameResults(Player.name, (time.Seconds).ToString(), DateTime.Now, Player.usedBombs));
+
+                TextAnimation(Menu.winText);
+                Media.mainTheme.Stop();
+            }
+        }
+        public static void TextAnimation(string str)
+            {
+                do
                 {
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.Write(str);
@@ -458,23 +201,24 @@ namespace ConsoleApp1
                     Thread.Sleep(500);
                     Console.Clear();
                     Console.ResetColor();
-                }
+                } while (!Console.KeyAvailable);
             }
-        private static void ResetLevel()
+        public static void ResetLevel()
             {
                 level1 = false;
                 level2 = false;
                 level3 = false;
+                level4 = false;
 
                 Plane.walls.Clear();
                 Plane.bricks.Clear();
-                Plane.empty.Clear();
 
                 Player.usedBombs = 0;
                 Player.isAlive = true;
                 Player.bombs.Clear();
 
                 enemies.Clear();
+                enemiesNumber = 0;
 
                 Menu.currentSection = 0;
             }
@@ -484,7 +228,7 @@ namespace ConsoleApp1
                 var result = rating.ReadJSON().OrderByDescending(el => el.UsedBobms).ToList();
                 if (result.Any())
                 {
-                    var table = new ConsoleTable("Place","Name","Time","Date","Used Bombs");
+                    var table = new ConsoleTable("Place", "Name", "Time", "Date", "Used Bombs");
                     for (int i = 0; i < result.Count && i < 10; i++) 
                         table.AddRow(i + 1, result[i].Name, result[i].Time + " s", result[i].Date, result[i].UsedBobms) ;
                     table.Write();
@@ -492,6 +236,5 @@ namespace ConsoleApp1
                 else
                     Console.WriteLine("You haven`t any data to show");
             }
-
-        }
-    } 
+    }
+} 
