@@ -2,10 +2,11 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 namespace ConsoleApp1
 {
-    class WorkWithFile
+    class DataReader 
     {
         private readonly string path = "GameResult.json";
 
@@ -31,12 +32,10 @@ namespace ConsoleApp1
         static public void IdentifyCells(string[,] arr)
         {
             Plane.position = new Cell((byte)arr.GetLength(0), (byte)arr.GetLength(1));
-            //Teleporter teleporter = new Teleporter();
             for (byte i = 0; i < arr.GetLength(0); i++)
             {
                 for (byte j = 0; j < arr.GetLength(1); j++)
                 {
-                    Console.ResetColor();
                     if (arr[i, j] == "#" || arr[i, j] == "W")
                     {
                         Plane.walls.Add(new Plane.Wall(new Cell(i, j)));
@@ -58,37 +57,63 @@ namespace ConsoleApp1
                     else if (arr[i, j] == "T")
                     {
                         Program.teleport.positionIn = new Cell(i, j);
+                        Program.teleporterExists = true;
                     }
                     else if (arr[i, j] == "t")
                     {
                         Program.teleport.positionOut = new Cell(i, j);
+                        Program.teleporterExists = true;
                     }
                 }
-                Console.WriteLine();
             }
         }
         static public string[,] ConvertToArray(string[] str)
         {
-            int j1 = str.Length;
-
-            string[,] arr = new string[j1, str[0].Length];
-
-            for (byte j = 0; j < j1; j++)
+            int rows = str.Length;
+            int[] arrLength = new int[rows];
+            int k = 0;
+            foreach(var i in str)
             {
-                for (byte i = 0; i < str[0].Length; i++)
+                arrLength[k++] = i.Length;
+            }
+
+            string[,] arr = new string[rows,arrLength.Max() ];
+            for (byte j = 0; j < rows; j++)
+            {
+                for (byte i = 0; i < str[j].Length; i++)
                 {
                     arr[j, i] = str[j].ToCharArray()[i].ToString();
                 }
             }
             return arr;
         }
+        static public string ConvertToString(string[] str)
+        {
+            string result = "";
+            for (int i = 0; i < str.Length; i++)
+            {
+                for (int j = 0; j < str[i].Length; j++)
+                {
+                    result += str[i][j];
+                }
+                result += "\n";
+            }
+            return result;
+        }
+        static public string ConvertToString(char[,] str)
+        {
+            string result = "";
+            for (int i = 0; i < str.GetLength(0); i++)
+            {
+                for (int j = 0; j < str.GetLength(1); j++)
+                {
+                    result += str[i, j];
+                }
+                result += "\n";
+            }
+            return result;
+        }
 
         static public string[] ReadTXT(string path) =>  File.ReadAllLines(path);
-        
-
-
-
-
-
     }
 }

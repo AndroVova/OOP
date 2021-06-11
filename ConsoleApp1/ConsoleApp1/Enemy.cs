@@ -1,11 +1,9 @@
-﻿using System.Linq;
-
-
+﻿
 namespace ConsoleApp1
 {
     public class Enemy
     {
-        public Cell position = new Cell();
+        public Cell position;
         public bool reverseVerticalMovement = false;
         public bool reverseHorizontalMovement = false;
         

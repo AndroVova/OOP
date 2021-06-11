@@ -22,7 +22,7 @@ namespace ConsoleApp1
                     if (BarrierSearcher.BarrierIsNear(0,0,new Cell(i,j),walls))
                     {
                         if ((i < 1 || i == position.X - 1) ||
-                            (j < 2 || j  > position.Y - 3))
+                            (j < 2 || j >= position.Y - 2))
                         {
                             Console.BackgroundColor = ConsoleColor.Red;
                         }
@@ -56,8 +56,6 @@ namespace ConsoleApp1
                     }
                     else
                         Console.Write(" ");
-
-                   
                 }
                 Console.WriteLine();
             }
@@ -67,14 +65,16 @@ namespace ConsoleApp1
         {
             string[] str;
             if (Program.level1)
-                str = WorkWithFile.ReadTXT(Media.level1);
+                str = DataReader.ReadTXT(Media.level1);
             else if (Program.level2)
-                str = WorkWithFile.ReadTXT(Media.level2);
+                str = DataReader.ReadTXT(Media.level2);
+            else if (Program.level3)
+                str = DataReader.ReadTXT(Media.level3);
             else
-                str = WorkWithFile.ReadTXT(Media.level3);
+                str = DataReader.ReadTXT(Media.level4);
 
-            var field = WorkWithFile.ConvertToArray(str);
-            WorkWithFile.IdentifyCells(field);
+            var field = DataReader.ConvertToArray(str);
+            DataReader.IdentifyCells(field);
         }
         public class Wall
         {

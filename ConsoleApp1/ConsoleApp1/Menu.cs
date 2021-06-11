@@ -12,6 +12,15 @@ namespace ConsoleApp1
 
         static public int currentSection = 0;
 
+        public enum Sections
+        {
+            first = 0,
+            second,
+            third,
+            forth,
+            fifth
+        }
+
         static private string startGameText =
                                    ("       ███████ ████████  █████  ██████  ████████      ██████   █████  ███    ███ ███████ \n" +
                                     "       ██         ██    ██   ██ ██   ██    ██        ██       ██   ██ ████  ████ ██      \n" +
@@ -110,6 +119,12 @@ namespace ConsoleApp1
         "       ██      █████   ██    ██ █████   ██           █████  \n" +
         "       ██      ██       ██  ██  ██      ██               ██ \n" +
         "       ███████ ███████   ████   ███████ ███████     ██████  \n";
+        static private string level_4_Text =
+        "        ██████ ██████  ███████  █████  ████████ ███████ ██████      ██      ███████ ██    ██ ███████ ██      \n" +
+        "       ██      ██   ██ ██      ██   ██    ██    ██      ██   ██     ██      ██      ██    ██ ██      ██      \n" +
+        "       ██      ██████  █████   ███████    ██    █████   ██   ██     ██      █████   ██    ██ █████   ██      \n" +
+        "       ██      ██   ██ ██      ██   ██    ██    ██      ██   ██     ██      ██       ██  ██  ██      ██      \n" +
+        "        ██████ ██   ██ ███████ ██   ██    ██    ███████ ██████      ███████ ███████   ████   ███████ ███████ \n";
 
         static private string hardLevelText =
         "       ██   ██  █████  ██████  ██████  \n" +
@@ -195,29 +210,29 @@ namespace ConsoleApp1
         "                 ████   ██    ██ ██    ██ ██████      ██ ██  ██ ███████ ██ ████ ██ █████    \n" +
         "                  ██    ██    ██ ██    ██ ██   ██     ██  ██ ██ ██   ██ ██  ██  ██ ██       \n" +
         "                  ██     ██████   ██████  ██   ██     ██   ████ ██   ██ ██      ██ ███████  \n";
-         static public string loseText = (
-    "\n" +
-    "\n" +
-    "\n" +
-    "\n" +
-   "            ▄██████▄     ▄████████   ▄▄▄▄███▄▄▄▄      ▄████████                                   \n" +
-   "           ███    ███   ███    ███ ▄██▀▀▀███▀▀▀██▄   ███    ███                                   \n" +
-   "           ███    █▀    ███    ███ ███   ███   ███   ███    █▀                                    \n" +
-   "          ▄███          ███    ███ ███   ███   ███  ▄███▄▄▄                                       \n" +
-   "         ▀▀███ ████▄  ▀███████████ ███   ███   ███ ▀▀███▀▀▀                                       \n" +
-   "           ███    ███   ███    ███ ███   ███   ███   ███    █▄                                    \n" +
-   "           ███    ███   ███    ███ ███   ███   ███   ███    ███                                   \n" +
-   "           ████████▀    ███    █▀   ▀█   ███   █▀    ██████████                                   \n" +
+        static public string loseText = (
    "\n" +
-   "                                                     ▄██████▄   ▄█    █▄     ▄████████    ▄████████ \n" +
-   "                                                    ███    ███ ███    ███   ███    ███   ███    ███ \n" +
-   "                                                    ███    ███ ███    ███   ███    █▀    ███    ███ \n" +
-   "                                                    ███    ███ ███    ███  ▄███▄▄▄      ▄███▄▄▄▄██▀ \n" +
-   "                                                    ███    ███ ███    ███ ▀▀███▀▀▀     ▀▀███▀▀▀▀▀   \n" +
-   "                                                    ███    ███ ███    ███   ███    █▄  ▀███████████ \n" +
-   "                                                    ███    ███ ███    ███   ███    ███   ███    ███ \n" +
-   "                                                     ▀██████▀   ▀██████▀    ██████████   ███    ███ \n" +
-   "                                                                                         ███    ███ \n");
+   "\n" +
+   "\n" +
+   "\n" +
+  "            ▄██████▄     ▄████████   ▄▄▄▄███▄▄▄▄      ▄████████                                   \n" +
+  "           ███    ███   ███    ███ ▄██▀▀▀███▀▀▀██▄   ███    ███                                   \n" +
+  "           ███    █▀    ███    ███ ███   ███   ███   ███    █▀                                    \n" +
+  "          ▄███          ███    ███ ███   ███   ███  ▄███▄▄▄                                       \n" +
+  "         ▀▀███ ████▄  ▀███████████ ███   ███   ███ ▀▀███▀▀▀                                       \n" +
+  "           ███    ███   ███    ███ ███   ███   ███   ███    █▄                                    \n" +
+  "           ███    ███   ███    ███ ███   ███   ███   ███    ███                                   \n" +
+  "           ████████▀    ███    █▀   ▀█   ███   █▀    ██████████                                   \n" +
+  "\n" +
+  "                                                     ▄██████▄   ▄█    █▄     ▄████████    ▄████████ \n" +
+  "                                                    ███    ███ ███    ███   ███    ███   ███    ███ \n" +
+  "                                                    ███    ███ ███    ███   ███    █▀    ███    ███ \n" +
+  "                                                    ███    ███ ███    ███  ▄███▄▄▄      ▄███▄▄▄▄██▀ \n" +
+  "                                                    ███    ███ ███    ███ ▀▀███▀▀▀     ▀▀███▀▀▀▀▀   \n" +
+  "                                                    ███    ███ ███    ███   ███    █▄  ▀███████████ \n" +
+  "                                                    ███    ███ ███    ███   ███    ███   ███    ███ \n" +
+  "                                                     ▀██████▀   ▀██████▀    ██████████   ███    ███ \n" +
+  "                                                                                         ███    ███ \n");
 
         static public string winText = (
                     "\n" +
@@ -241,12 +256,35 @@ namespace ConsoleApp1
                     "                                   ███     ███ ███  ███   ███ \n" +
                     "                                   ███ ▄█▄ ███ ███  ███   ███ \n" +
                     "                                    ▀███▀███▀  █▀    ▀█   █▀  \n");
+        static private string createText =
+          "        ██████ ██████  ███████  █████  ████████ ███████ \n" +
+          "       ██      ██   ██ ██      ██   ██    ██    ██      \n" +
+          "       ██      ██████  █████   ███████    ██    █████   \n" +
+          "       ██      ██   ██ ██      ██   ██    ██    ██      \n" +
+          "        ██████ ██   ██ ███████ ██   ██    ██    ███████ \n";
 
-        static public string[] menu = new string[] {startGameText, settingsText, resultsText, exitText};
+
+        static public string yesText =
+          "      ██    ██ ███████ ███████ \n" +
+          "       ██  ██  ██      ██      \n" +
+          "        ████   █████   ███████ \n" +
+          "         ██    ██           ██ \n" +
+          "         ██    ███████ ███████ \n";
+
+
+        static public string noText =
+          "      ███    ██  ██████  \n" +
+          "      ████   ██ ██    ██ \n" +
+          "      ██ ██  ██ ██    ██ \n" +
+          "      ██  ██ ██ ██    ██ \n" +
+          "      ██   ████  ██████  \n";
+
+        static public string[] menu = new string[] {startGameText, settingsText, resultsText, createText, exitText};
         static public string[] settings = new string[] { controlsText, gameSpeedSettingText, DifficultyText, backText };
         static public string[] gameSpeedSettings = new string[] { highSpeedText, normalSpeedText, slowSpeedText,backText };
-        static public string[] levelSelection = new string[] { level_1_Text, level_2_Text, level_3_Text, backText };
+        static public string[] levelSelection = new string[] { level_1_Text, level_2_Text, level_3_Text, level_4_Text, backText };
         static public string[] difficultySeceltion = new string[] { EasyLevelText, hardLevelText, backText };
+        static public string[] yesNoSelection = new string[] { yesText, noText };
 
 
         static public void MakeMenu(string[] items)
@@ -260,13 +298,12 @@ namespace ConsoleApp1
             Console.SetCursorPosition(0, 0);
 
 
-            ViewCurrentSection(items);
             while (!isSelected)
             {
+                ViewCurrentSection(items);
                 Console.BackgroundColor = Console.ForegroundColor = ConsoleColor.Black;
                 ConsoleKeyInfo key = Console.ReadKey();
-                MovementInMenu(key, items);
-                ViewCurrentSection(items);                
+                MovementInMenu(key, items);                            
             }
             isSelected = false;
             Console.ResetColor();
@@ -276,7 +313,7 @@ namespace ConsoleApp1
         {
             while (!Console.KeyAvailable && !isSelected)
             {
-                if (currentSection == 0)
+                if (currentSection == (int)Sections.first)
                     position = 2;
                 else 
                     position = currentSection * 6 + 2;
@@ -381,8 +418,7 @@ namespace ConsoleApp1
                 Console.SetCursorPosition(0,0);
                 Console.ReadLine();
                 Console.Clear();
-                currentSection = 1;
-                isSelected = true;
+                currentSection = (int)Sections.second;
         }
         
         static public void MakeMenuStructure()
@@ -393,53 +429,64 @@ namespace ConsoleApp1
                 Media.mainTheme.PlayLooping();
                 MakeMenu(menu);
                 Console.Clear();
-
-                if (currentSection == 0)
+                switch (currentSection)
                 {
-                    StartGameButton();
-                    if(isBack)
+                    case (int)Sections.first:
+                        StartGameButton();
+                        if (isBack)
+                            continue;
+                        break;
+                    case (int)Sections.second:
+                        SettingsButton();
                         continue;
-                }
-                else if (currentSection == 1)
-                {
-                    currentSection = 0;
-                    MakeMenu(settings);
-                    Console.Clear();
-                    switch (currentSection)
-                    {
-                        case 0:
-                            ViewControls();                            
-                            continue;
-                        case 1:
-                            GameSpeedButton();
-                            continue;
-                        case 2:
-                            DifficultyButton();
-                            continue;
-                        case 3:
-                            currentSection = 1;
-                            continue;
-                    }
-                }
-                else if (currentSection == 2)
-                {
-                    Program.DrawRating();
-                    Console.ReadLine();
-                    Console.Clear();
-                    continue;
-                }
-                else if (currentSection == 3)
-                {
-                    Console.SetWindowSize(100, 30);
-                    Program.TextAnimation(ByeText);
-                    gameIsActive = false;
-                }
+                    case (int)Sections.third:
+                        Program.DrawRating();
+                        Console.ReadLine();
+                        Console.Clear();
+                        continue;
+                    case (int)Sections.forth:
+                        currentSection = (int)Sections.first;
+                        Console.CursorVisible = true;
+                        Create.CreateField();
+                        Console.Clear();
+                        continue;
+                    case (int)Sections.fifth:
+                        Console.SetWindowSize(100, 30);
+                        Program.TextAnimation(ByeText);
+                        gameIsActive = false;
+                        break;
+
+                }               
 
                 Console.ReadKey();
                 Console.ResetColor();
                 Program.ResetLevel();
             }
         }
+
+        static private void SettingsButton()
+        {
+            currentSection = (int)Sections.first;
+            MakeMenu(settings);
+            Console.Clear();
+
+            switch (currentSection)
+            {
+                case (int)Sections.first:
+                    ViewControls();
+                    break;
+                case (int)Sections.second:
+                    GameSpeedButton();
+                    break ;
+                case (int)Sections.third:
+                    DifficultyButton();
+                    break;
+                case (int)Sections.forth:
+                    currentSection = (int)Sections.second;
+                    break;
+            }
+        }
+
 
         static private void StartGameButton()
         {
@@ -448,19 +495,21 @@ namespace ConsoleApp1
             Console.Clear();
             switch (currentSection)
             {
-                case 0:
+                case (int)Sections.first:
                     Program.level1 = true;
                     break;
-                case 1:
+                case (int)Sections.second:
                     Program.level2 = true;
                     break;
-                case 2:
+                case (int)Sections.third:
                     Program.level3 = true;
                     break;
-                
-                case 3:
+                case (int)Sections.forth:
+                    Program.level4 = true;
+                    break;
+                case (int)Sections.fifth:
                     isBack = true;
-                    currentSection = 0;
+                    currentSection = (int)Sections.first;
                     break;
             }
             if (!isBack)
@@ -473,17 +522,17 @@ namespace ConsoleApp1
             switch (currentSection)
 
             {
-                case 0:
+                case (int)Sections.first:
                     Program.gameSpeed = 40;
                     break;
-                case 1:
+                case (int)Sections.second:
                     Program.gameSpeed = 60;
                     break;
-                case 2:
+                case (int)Sections.third:
                     Program.gameSpeed = 80;
                     break;
-                case 3:
-                    currentSection = 1;
+                case (int)Sections.forth:
+                    currentSection = (int)Sections.second;
                     isSelected = true;
                     break;
             }
@@ -494,14 +543,14 @@ namespace ConsoleApp1
             Console.Clear();
             switch (currentSection)
             {
-                case 0:
+                case (int)Sections.first:
                     Program.isHard = false;
                     break;
-                case 1:
+                case (int)Sections.second:
                     Program.isHard = true;
                     break;
-                case 2:
-                    currentSection = 1;
+                case (int)Sections.third:
+                    currentSection = (int)Sections.second;
                     isSelected = true;
                     break;
             }

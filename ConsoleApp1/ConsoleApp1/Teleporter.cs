@@ -3,8 +3,8 @@ namespace ConsoleApp1
 {
     public class Teleporter
     {
-        public Cell positionIn = new Cell();
-        public Cell positionOut = new Cell();
+        public Cell positionIn;
+        public Cell positionOut;
 
         public Teleporter()
         {
@@ -16,7 +16,6 @@ namespace ConsoleApp1
             this.positionOut = positionOut;
         }
 
-  //    public List<Teleporter> teleporters = new List<Teleporter>();
         public int isOut = 0;
 
         public void TeleportPlayer()

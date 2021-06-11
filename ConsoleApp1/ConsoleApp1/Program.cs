@@ -11,13 +11,14 @@ namespace ConsoleApp1
     class Program
     {
         public static List<Enemy> enemies = new List<Enemy>();
-        static public Teleporter teleport = new Teleporter(new Cell(6, 2), new Cell(15, 25));
+        static public Teleporter teleport = new Teleporter();
 
         static public bool level1 = false;
         static public bool level2 = false;
         static public bool level3 = false;
         static public bool level4 = false;
-        static public bool isHard = false;        
+        static public bool isHard = false;
+        static public bool teleporterExists = false;
 
         private static bool changeColor = true;
 
@@ -55,9 +56,10 @@ namespace ConsoleApp1
                 stopWatch.Start();
                 while (Player.isAlive && enemies.Count != 0)
                 {
+                //rename: do....
                     DrawBombs();
-                    DrawPlayerMovement();
-                    DrawEnemyMovement();
+                    DoPlayerMovement();
+                    DoEnemyMovement();
                     DrawTeleporeter();
                     DrawEnemyLives();
                     Thread.Sleep(3 * gameSpeed);
@@ -71,7 +73,7 @@ namespace ConsoleApp1
                 DrawEndGameText(stopWatch);
             }
 
-        static private void DrawPlayerMovement()
+        static private void DoPlayerMovement()
             {
                 if (Console.KeyAvailable)
                 {
@@ -112,7 +114,7 @@ namespace ConsoleApp1
                 }
             }
 
-        static private void DrawEnemyMovement()
+        static private void DoEnemyMovement()
             {
                 for (int i = 0; i < enemies.Count; i++)
                 { 
@@ -138,7 +140,8 @@ namespace ConsoleApp1
             }
 
         static void DrawTeleporeter()
-
+        {
+            if (teleporterExists)
             {
                 Console.SetCursorPosition(teleport.positionIn.Y,
                                           teleport.positionIn.X);
@@ -168,6 +171,7 @@ namespace ConsoleApp1
                 Console.SetCursorPosition(0, Plane.position.X + 1);
                 Console.ResetColor();
             }
+        }
         private static void DrawEndGameText(Stopwatch stopWatch)
         {
             if (!Player.isAlive)
@@ -181,7 +185,7 @@ namespace ConsoleApp1
                 Media.mainTheme.PlayLooping();
 
                 TimeSpan time = stopWatch.Elapsed;
-                var newRating = new WorkWithFile();
+                var newRating = new DataReader();
                 newRating.AddResults(new GameResults(Player.name, (time.Seconds).ToString(), DateTime.Now, Player.usedBombs));
 
                 TextAnimation(Menu.winText);
@@ -224,7 +228,7 @@ namespace ConsoleApp1
             }
         public static void DrawRating()
             {
-                var rating = new WorkWithFile();
+                var rating = new DataReader();
                 var result = rating.ReadJSON().OrderByDescending(el => el.UsedBobms).ToList();
                 if (result.Any())
                 {

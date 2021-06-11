@@ -69,10 +69,7 @@ namespace ConsoleApp1
 
             private short _explosionTime = 18;
 
-            private byte explosionFramesR = 1;
-            private byte explosionFramesL = 1;
-            private byte explosionFramesB = 1;
-            private byte explosionFramesT = 1;
+            private byte explosionFrames = 1;
 
             public Bomb(Cell position)
             {
@@ -107,73 +104,70 @@ namespace ConsoleApp1
             {
                 Console.SetCursorPosition(position.Y, position.X);
                 Console.Write(str);
-                AllSidesBang(str,  0,  1, explosionFramesR);
-                explosionFramesR++;
+                AllSidesBang(str,  0,  1);    
 
-                AllSidesBang(str,  0, -1, explosionFramesL);
-                explosionFramesL++;
+                AllSidesBang(str,  0, -1);
+                
+                AllSidesBang(str,  1,  0);    
 
-                AllSidesBang(str,  1,  0, explosionFramesB);
-                explosionFramesB++;
-
-                AllSidesBang(str, -1,  0, explosionFramesT);
-                explosionFramesT++;
+                AllSidesBang(str, -1,  0);
+                explosionFrames++;
             }
 
-            private void AllSidesBang(char str, sbyte x, sbyte y, byte explosionFrame )
+            private void AllSidesBang(char str, sbyte dx, sbyte dy)
             {
-                if (BarrierSearcher.BarrierIsNear(x, y, position, Plane.bricks))
+                if (BarrierSearcher.BarrierIsNear(dx, dy, position, Plane.bricks))
                 {
-                    if (explosionFrame == 4)
+                    if (explosionFrames == 4)
                     {
                         Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
-                                                                              new Cell((byte)(position.X + x), (byte)(position.Y + y))));
+                                                                              new Cell((byte)(position.X + dx), (byte)(position.Y + dy))));
                     }
-                    DrawFire(x, y, str);
+                    DrawFire(dx, dy, str);
                 }
 
-                else if (!BarrierSearcher.BarrierIsNear(x, y, position) &&
-                          BarrierSearcher.BarrierIsNear((sbyte)(2 * x), (sbyte)(2 * y), position, Plane.bricks))
+                else if (!BarrierSearcher.BarrierIsNear(dx, dy, position) &&
+                          BarrierSearcher.BarrierIsNear((sbyte)(2 * dx), (sbyte)(2 * dy), position, Plane.bricks))
                 {
-                     if (explosionFrame == 4)
+                     if (explosionFrames == 4)
                      {
                          Plane.bricks.Remove(Plane.bricks.FirstOrDefault(el => el.position ==
-                                                                               new Cell((byte)(position.X + 2 * x), (byte)(position.Y + 2 * y))));
+                                                                               new Cell((byte)(position.X + 2 * dx), (byte)(position.Y + 2 * dy))));
                      }
-                     DrawFire(x, y, str);
-                     DrawFire((sbyte)(2*x), (sbyte)(2 * y), str);
+                     DrawFire(dx, dy, str);
+                     DrawFire((sbyte)(2*dx), (sbyte)(2 * dy), str);
                 }
 
-                else if (!BarrierSearcher.BarrierIsNear(x, y, position, Plane.walls))
+                else if (!BarrierSearcher.BarrierIsNear(dx, dy, position, Plane.walls))
                 {
-                     DeathFromBang(x, y);
+                     DeathFromBang(dx, dy);
 
-                     DrawFire(x, y, str);
-                     if (!BarrierSearcher.BarrierIsNear((sbyte)(2 * x), (sbyte)(2 * y), position, Plane.walls))
+                     DrawFire(dx, dy, str);
+                     if (!BarrierSearcher.BarrierIsNear((sbyte)(2 * dx), (sbyte)(2 * dy), position, Plane.walls))
                      {
-                        DeathFromBang((sbyte)(2 * x), (sbyte)(2 * y));
+                        DeathFromBang((sbyte)(2 * dx), (sbyte)(2 * dy));
 
-                        DrawFire((sbyte)(2 * x), (sbyte)(2 * y), str);
+                        DrawFire((sbyte)(2 * dx), (sbyte)(2 * dy), str);
                      }
                  }
             }
 
-            private void DrawFire(sbyte x, sbyte y, char str)
+            private void DrawFire(sbyte dx, sbyte dy, char str)
             {
-                Console.SetCursorPosition(position.Y + y, position.X + x);
+                Console.SetCursorPosition(position.Y + dy, position.X + dx);
                 Console.Write(str);
             }
 
-            private void DeathFromBang(sbyte x , sbyte y)
+            private void DeathFromBang(sbyte dx , sbyte dy)
             {
-                if (Player.position.X == position.X + x && 
-                    Player.position.Y == position.Y + y)
+                if (Player.position.X == position.X + dx && 
+                    Player.position.Y == position.Y + dy)
                     isAlive = false;
-                else if (Program.enemies.Any(el => el.position.X == position.X + x &&  
-                                                   el.position.Y == position.Y + y))
+                else if (Program.enemies.Any(el => el.position.X == position.X + dx &&  
+                                                   el.position.Y == position.Y + dy))
                 {
                     Program.enemies.Remove(Program.enemies.FirstOrDefault(el => el.position ==
-                                                                                new Cell((byte)(position.X + x), (byte)(position.Y + y))));
+                                                                                new Cell((byte)(position.X + dx), (byte)(position.Y + dy))));
                 }                    
             }
 

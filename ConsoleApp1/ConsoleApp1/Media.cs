@@ -12,5 +12,6 @@ namespace ConsoleApp1
         static public string level1 = @"Levels\level1.txt";
         static public string level2 = @"Levels\level2.txt";
         static public string level3 = @"Levels\level3.txt";
+        static public string level4 = @"Levels\level4.txt";
     }
 }
