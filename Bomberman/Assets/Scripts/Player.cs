@@ -1,7 +1,6 @@
-﻿using System.Collections;
+﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine;
-using System;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -28,6 +27,7 @@ public class Player : MonoBehaviour
     public int moveSpeed;
     private int direction;
     public int fireLength;
+    public int allowedBombs;
 
     public LayerMask WallLayer;
 
@@ -39,9 +39,16 @@ public class Player : MonoBehaviour
         down = 2
     }
 
+    enum PowerUps
+    {
+        fireLength = 0,
+        addSpeed,
+        addBombs
+    }
+
     void Start()
     {
-        //fireLength = 2;
+        
     }
 
     void Update()
@@ -52,9 +59,10 @@ public class Player : MonoBehaviour
             MoveSensor();
             PlantBomb();
             Move();
-
+            
             PlayerAnimation();
         }
+        UpdateTextInfo();
     }
     private void GetInput()
     {
@@ -69,7 +77,7 @@ public class Player : MonoBehaviour
 
         buttonUp =  (Input.GetKey(KeyCode.UpArrow) && player2 ||
                      Input.GetKey(KeyCode.W)       && player1);
-        ///podumat`
+
         buttonBomb = Input.GetKeyDown(KeyCode.E)           && player1 || 
                      Input.GetKeyDown(KeyCode.KeypadEnter) && player2;
     }
@@ -80,8 +88,7 @@ public class Player : MonoBehaviour
         if (buttonUp) direction = (int)Directions.up;
         if (buttonRight) direction = (int)Directions.right;
         if (buttonLeft) direction = (int)Directions.left;
-        if (buttonDown) direction = (int)Directions.down;
-        
+        if (buttonDown) direction = (int)Directions.down;        
     }
 
     private void MoveSensor()
@@ -142,14 +149,43 @@ public class Player : MonoBehaviour
     }
 
     public void PlantBomb()
-    {
-        if (buttonBomb)
+    {        
+        int plantedBombs = FindAmountOfBombs();
+        if (buttonBomb && plantedBombs < allowedBombs)
         {  
             Instantiate(Bomb, new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y)), transform.rotation);
             FindObjectOfType<Bomb>().Creator = this;
         }
     }
 
+    private int FindAmountOfBombs()
+    {
+        int number = 0;
+        Bomb[] bombs = FindObjectsOfType<Bomb>();
+        foreach (var bomb in bombs)
+        {
+            if (bomb.Creator == this)
+            {
+                number++;
+            }
+        }
+        return number;
+    }
+
+
+    private void UpdateTextInfo()
+    {
+        int currentAllowedBombs = allowedBombs - FindAmountOfBombs();
+        if (player1 && player2)
+            GameObject.Find("Info Player").GetComponent<TextMeshProUGUI>().text = $"{currentAllowedBombs}/{allowedBombs}";
+        else
+        {
+            if (player1)
+                GameObject.Find("Info Player1").GetComponent<TextMeshProUGUI>().text = $"{currentAllowedBombs}/{allowedBombs}";
+            if (player2)
+                GameObject.Find("Info Player2").GetComponent<TextMeshProUGUI>().text = $"{currentAllowedBombs}/{allowedBombs}";
+        }
+    }
     private void PlayerAnimation()
     {
         if (player1)
@@ -157,9 +193,8 @@ public class Player : MonoBehaviour
             var animator = GetComponent<Animator>();
             animator.SetInteger("Direction", direction);
         }
-    }
+    } 
 
-   
     void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag == "Fire")
@@ -172,15 +207,16 @@ public class Player : MonoBehaviour
         {
             switch (other.gameObject.GetComponent<PowerUp>().powerUpNumber)
             {
-                case 0:                    
+                case (int)PowerUps.fireLength:                    
                     AddFireLength();
-                    print(fireLength);
                     break;
-                case 1:
+                case (int)PowerUps.addSpeed:
                     AddSpeed();
                     break;
+                case (int)PowerUps.addBombs:
+                    AddBombs();
+                    break;
             }
-
             Destroy(other.gameObject);
         }
     }
@@ -189,11 +225,14 @@ public class Player : MonoBehaviour
     {
         fireLength++;
     }
-
-    public int GetFireLength() =>fireLength;
+    private void AddBombs()
+    {
+        allowedBombs++;
+    }
+    public int GetFireLength() => fireLength;
 
     public void StopPlayer()
     {
-        isStoped = true; ///
+        isStoped = true;
     }
 }

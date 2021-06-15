@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     public float moveSpeed;
     public LayerMask BarrierLayer;
 
-    private bool canMove = true;
+    private bool canMove = false;
     private bool reverseMovement = true;
     private bool rightMove;
     private PathFinding pathFinding;
@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-    void Update()
+    void FixedUpdate()
     {
         if (FindObjectOfType<Visuals>().gameIsActive && Player != null)
         {
@@ -39,7 +39,9 @@ public class Enemy : MonoBehaviour
             Instantiate(EnemyDeathEffect, transform.position, transform.rotation);
         }
         if (other.gameObject.tag == "PowerUp")
-        {
+        {            
+            if (other.gameObject.GetComponent<PowerUp>().powerUpNumber == 1)
+                AddSpeed();                            
             Destroy(other.gameObject);
         }
         if (other.gameObject.tag == "Player")
@@ -49,7 +51,10 @@ public class Enemy : MonoBehaviour
         }
     }
 
-
+    private void AddSpeed()
+    {
+        moveSpeed++;
+    }
     private void Move()
     {
         if (Vector2.Distance(transform.position, Player.transform.position) > 0)
@@ -77,10 +82,10 @@ public class Enemy : MonoBehaviour
             EnemyMove(0, -1);
         if (rightMove)
             EnemyMove(1, 0);
-
         canMove = !Physics2D.OverlapBox(transform.position, new Vector2(0.9f, 0.9f), 0, BarrierLayer);
         rightMove = Physics2D.OverlapBox(new Vector2(transform.position.x, transform.position.y + 1), new Vector2(0.9f, 0.9f), 0, BarrierLayer) &&
                     Physics2D.OverlapBox(new Vector2(transform.position.x, transform.position.y - 1), new Vector2(0.9f, 0.9f), 0, BarrierLayer);
+
     }
 
     private void EnemyMove()

@@ -147,3 +147,5 @@ MonoBehaviour:
   ExtraFire: {fileID: 2738451653393825323, guid: f4b7167009299734f8520ddb48c64c3b,
     type: 3}
   SpeedUp: {fileID: 4314801847513197422, guid: 77294aa83298afa4ebea6e5bf7a31932, type: 3}
+  AdditionalBombs: {fileID: 636670135530436798, guid: d62a1ec2b6484a343803d1abf44b99ef,
+    type: 3}

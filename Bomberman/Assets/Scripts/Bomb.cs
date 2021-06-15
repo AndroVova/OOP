@@ -34,7 +34,6 @@ public class Bomb : MonoBehaviour
         CellsToBlowL = new List<Vector2>();
         CellsToBlowU = new List<Vector2>();
         CellsToBlowD = new List<Vector2>();
-
     }
 
     void Update()

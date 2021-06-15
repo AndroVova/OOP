@@ -37,7 +37,8 @@ public class Visuals : MonoBehaviour
     private void EndOfGame()
     {
         ResetButton.SetActive(true);
-        BackButton.SetActive(true);        
+        BackButton.SetActive(true);
+        GameObject.Find("Reseter").SetActive(false);
 
         if (enemies.Length == 0 && player != null)
         {

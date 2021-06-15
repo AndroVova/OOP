@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Fire : MonoBehaviour
 {
     public GameObject BrickDeathEffect;
     public GameObject ExtraFire;
     public GameObject SpeedUp;
+    public GameObject AdditionalBombs;
 
     public void DestroySelf()
     {
@@ -25,10 +24,14 @@ public class Fire : MonoBehaviour
     {
         if (Random.Range(0, 100) % 3 == 0)
         {
-            if (Random.Range(0, 10) % 2 == 0)
+            int number = Random.Range(0, 10);
+            if (number % 4 == 0)
+                Instantiate(AdditionalBombs, transform.position, transform.rotation);
+            else if (number % 3 == 0)
                 Instantiate(ExtraFire, transform.position, transform.rotation);
-            else
+            else if (number % 3 == 1)
                 Instantiate(SpeedUp, transform.position, transform.rotation);
+            
         }
     }
 }
