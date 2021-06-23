@@ -1,20 +1,15 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 using TMPro;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
-    private bool buttonRight;
-    private bool buttonLeft;
-    private bool buttonUp;
-    private bool buttonDown;
-    private bool buttonBomb;
-
     public bool player1;
     public bool player2;
+    public bool isStoped = false;
 
     private bool canMove = false;
-    public bool isStoped = false;
+    private bool buttonBomb;
 
     public Transform sensor;
 
@@ -22,16 +17,17 @@ public class Player : MonoBehaviour
     public GameObject PlayerDeathEffect;
 
     public float sensorSize;
-    public float sensorRange;
 
-    public int moveSpeed;
-    private int direction;
+    public int moveSpeed;    
     public int fireLength;
     public int allowedBombs;
 
     public LayerMask WallLayer;
 
-    enum Directions
+    private Direction direction;
+    private List<Direction> pressedKeys;
+
+    enum Direction
     {
         up = 8,
         left = 4,
@@ -46,49 +42,88 @@ public class Player : MonoBehaviour
         addBombs
     }
 
-    void Start()
+    private void Start()
     {
-        
+        pressedKeys = new List<Direction>();
     }
-
     void Update()
     {
         if (!isStoped) {
             GetInput();
-            GetDirection();
+            SetDirection();
             MoveSensor();
             PlantBomb();
             Move();
             
             PlayerAnimation();
         }
+     
         UpdateTextInfo();
     }
     private void GetInput()
     {
-        buttonRight = (Input.GetKey(KeyCode.RightArrow) && player2 ||
-                       Input.GetKey(KeyCode.D)          && player1);
-
-        buttonLeft =  (Input.GetKey(KeyCode.LeftArrow) && player2 ||
-                       Input.GetKey(KeyCode.A)         && player1);
-         
-        buttonDown =  (Input.GetKey(KeyCode.DownArrow) && player2 ||
-                       Input.GetKey(KeyCode.S)         && player1);
-
-        buttonUp =  (Input.GetKey(KeyCode.UpArrow) && player2 ||
-                     Input.GetKey(KeyCode.W)       && player1);
+        GetPressedButtons();
+        RemoveUnpressedButtons();
 
         buttonBomb = Input.GetKeyDown(KeyCode.E)           && player1 || 
                      Input.GetKeyDown(KeyCode.KeypadEnter) && player2;
     }
 
-    private void GetDirection()
+    private void GetPressedButtons()
     {
-        direction = 0;
-        if (buttonUp) direction = (int)Directions.up;
-        if (buttonRight) direction = (int)Directions.right;
-        if (buttonLeft) direction = (int)Directions.left;
-        if (buttonDown) direction = (int)Directions.down;        
+        if (Input.GetKeyDown(KeyCode.RightArrow) && player2 ||
+            Input.GetKeyDown(KeyCode.D) && player1)
+            pressedKeys.Insert(0, Direction.right);
+        if (Input.GetKeyDown(KeyCode.LeftArrow) && player2 ||
+            Input.GetKeyDown(KeyCode.A) && player1)
+            pressedKeys.Insert(0, Direction.left);
+        if (Input.GetKeyDown(KeyCode.DownArrow) && player2 ||
+            Input.GetKeyDown(KeyCode.S) && player1)
+            pressedKeys.Insert(0, Direction.down);
+        if (Input.GetKeyDown(KeyCode.UpArrow) && player2 ||
+            Input.GetKeyDown(KeyCode.W) && player1)
+            pressedKeys.Insert(0, Direction.up);
+    }
+
+    private void RemoveUnpressedButtons()
+    {
+        if (Input.GetKeyUp(KeyCode.RightArrow) && player2 ||
+           Input.GetKeyUp(KeyCode.D) && player1)
+            pressedKeys.Remove(Direction.right);
+        if (Input.GetKeyUp(KeyCode.LeftArrow) && player2 ||
+            Input.GetKeyUp(KeyCode.A) && player1)
+            pressedKeys.Remove(Direction.left);
+        if (Input.GetKeyUp(KeyCode.DownArrow) && player2 ||
+            Input.GetKeyUp(KeyCode.S) && player1)
+            pressedKeys.Remove(Direction.down);
+        if (Input.GetKeyUp(KeyCode.UpArrow) && player2 ||
+            Input.GetKeyUp(KeyCode.W) && player1)
+            pressedKeys.Remove(Direction.up);
+    }
+
+    private void SetDirection()
+    {
+        if (pressedKeys.Count == 0)
+        {
+            direction = 0;
+            return;
+        }
+
+        switch (pressedKeys[0])
+        {
+            case Direction.up:
+                direction = Direction.up;
+                break;
+            case Direction.left:
+                direction = Direction.left;
+                break;
+            case Direction.down:
+                direction = Direction.down;
+                break;
+            case Direction.right:
+                direction = Direction.right;
+                break;
+        }        
     }
 
     private void MoveSensor()
@@ -96,17 +131,17 @@ public class Player : MonoBehaviour
         sensor.transform.localPosition = new Vector2(0, 0);
         switch (direction)
         {
-            case (int)Directions.up:
-                sensor.transform.localPosition = new Vector2(0, sensorRange);
+            case Direction.up:
+                sensor.transform.localPosition = new Vector2(0, sensorSize);
                 break;
-            case (int)Directions.right:
-                sensor.transform.localPosition = new Vector2(sensorRange, 0);
+            case Direction.right:
+                sensor.transform.localPosition = new Vector2(sensorSize, 0);
                 break;
-            case (int)Directions.left:
-                sensor.transform.localPosition = new Vector2(-sensorRange, 0);
+            case Direction.left:
+                sensor.transform.localPosition = new Vector2(-sensorSize, 0);
                 break;
-            case (int)Directions.down:
-                sensor.transform.localPosition = new Vector2(0, -sensorRange);
+            case Direction.down:
+                sensor.transform.localPosition = new Vector2(0, -sensorSize);
                 break;
             
         }
@@ -119,16 +154,16 @@ public class Player : MonoBehaviour
             return;
         switch (direction)
         {
-            case (int)Directions.down:
+            case Direction.down:
                 transform.position = VerticalMove(-1);
                 break;            
-            case (int)Directions.left:
+            case Direction.left:
                 transform.position = HorizontalMove(-1);
                 break;
-            case (int)Directions.right:
+            case Direction.right:
                 transform.position = HorizontalMove(1);
                 break;
-            case (int)Directions.up:
+            case Direction.up:
                 transform.position = VerticalMove(1);
                 break;
         }
@@ -154,7 +189,7 @@ public class Player : MonoBehaviour
         if (buttonBomb && plantedBombs < allowedBombs)
         {  
             Instantiate(Bomb, new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y)), transform.rotation);
-            FindObjectOfType<Bomb>().Creator = this;
+            FindObjectOfType<Bomb>().creator = this;
         }
     }
 
@@ -164,7 +199,7 @@ public class Player : MonoBehaviour
         Bomb[] bombs = FindObjectsOfType<Bomb>();
         foreach (var bomb in bombs)
         {
-            if (bomb.Creator == this)
+            if (bomb.creator == this)
             {
                 number++;
             }
@@ -191,7 +226,7 @@ public class Player : MonoBehaviour
         if (player1)
         {
             var animator = GetComponent<Animator>();
-            animator.SetInteger("Direction", direction);
+            animator.SetInteger("Direction", (int)direction);
         }
     } 
 

@@ -2670,7 +2670,6 @@ MonoBehaviour:
   PlayerDeathEffect: {fileID: 8229774113504113306, guid: d642e0b1ecbe4d9469edacea2aeb54ab,
     type: 3}
   sensorSize: 0.35
-  sensorRange: 0.35
   moveSpeed: 3
   fireLength: 2
   allowedBombs: 2
@@ -3592,9 +3591,9 @@ MonoBehaviour:
   player1WinText: {fileID: 1915144201}
   player2WinText: {fileID: 977202061}
   drawText: {fileID: 928887761}
+  resetter: {fileID: 148685905}
   player1: {fileID: 1469471424}
   player2: {fileID: 269806545}
-  gameIsActive: 0
 --- !u!1001 &388468111
 PrefabInstance:
   m_ObjectHideFlags: 0

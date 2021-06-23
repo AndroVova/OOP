@@ -12,40 +12,36 @@ public class Location
     public int H;
     public Location Parent;
 }
+
 class PathFinding : MonoBehaviour
 {
     public GameObject Player;
     public LayerMask BarrierLayer;
-    public Location GetTargetPosition(GameObject Player)
-    {
-        Location target;
-        if (Player != null)
+    public Location GetTargetPosition() 
+    {        
+        if (Player == null)
+            return null;
+
+        return new Location
         {
-            target = new Location
-            {
-                X = (int)Mathf.Round(Player.transform.position.x),
-                Y = (int)Mathf.Round(Player.transform.position.y)
-            };
-        }
-        else
-        {
-            target = new Location
-            {
-                X = (int)Mathf.Round(transform.position.x),
-                Y = (int)Mathf.Round(transform.position.y)
-            };
-        }
-        return target;
+            X = (int)Mathf.Round(Player.transform.position.x),
+            Y = (int)Mathf.Round(Player.transform.position.y)
+        };       
     }
     public List<Location> CalculateIdealPath()
     {
-
+        List<Location> truePath = new List<Location>();
         Location start = new Location
         {
            X = (int)Mathf.Round(transform.position.x),
            Y = (int)Mathf.Round(transform.position.y)
         };
-        Location target = GetTargetPosition(Player);
+        Location target = GetTargetPosition();
+        if (target == null)
+        {
+            truePath.Add(null);
+            return truePath;
+        }
         
         Location current = null;
         List<Location> openList = new List<Location>();
@@ -63,8 +59,7 @@ class PathFinding : MonoBehaviour
 
             openList.Remove(current);
 
-            if (closedList.FirstOrDefault(el => el.X == target.X && 
-                                                el.Y == target.Y) != null)
+            if (IsInList(closedList, target))
                 break;
 
             List<Location> neighborSquares = GetNeighborSquares(current, openList);
@@ -72,12 +67,19 @@ class PathFinding : MonoBehaviour
 
             foreach (Location neighborSquare in neighborSquares)
             {
-                if (closedList.FirstOrDefault(el => el.X == neighborSquare.X &&
-                                                    el.Y == neighborSquare.Y) != null)
+                if (IsInList(closedList, neighborSquare))
                     continue;
 
-                if (openList.FirstOrDefault(el => el.X == neighborSquare.X &&
-                                                  el.Y == neighborSquare.Y) == null)
+                if (IsInList(openList, neighborSquare))
+                {
+                    if (g + neighborSquare.H < neighborSquare.F)
+                    {
+                        neighborSquare.G = g;
+                        neighborSquare.F = neighborSquare.G + neighborSquare.H;
+                        neighborSquare.Parent = current;
+                    }                    
+                }
+                else
                 {
                     neighborSquare.G = g;
                     neighborSquare.H = ComputeHScore(neighborSquare.X, neighborSquare.Y, target.X, target.Y);
@@ -89,14 +91,14 @@ class PathFinding : MonoBehaviour
                 }
             }
         }
-        List<Location> truePath = new List<Location>();
+        
         while (current != null)
         {
             truePath.Insert(0, current);
             current = current.Parent;
         }
         
-            return truePath;
+        return truePath;
     }
 
     List<Location> GetNeighborSquares(Location current, List<Location> openList)
@@ -132,11 +134,14 @@ class PathFinding : MonoBehaviour
     {
         return Math.Abs(targetX - x) + Math.Abs(targetY - y);
     }
+    private bool IsInList(List<Location> list, Location square)
+        => list.FirstOrDefault(el => el.X == square.X &&
+                                     el.Y == square.Y) != null;
 
     void OnDrawGizmos()
     {
         var truePath = CalculateIdealPath();
-        if (truePath != null)
+        if (truePath != null && truePath.Count != 1)
             foreach (var item in truePath)
             {
                 Gizmos.color = Color.red;

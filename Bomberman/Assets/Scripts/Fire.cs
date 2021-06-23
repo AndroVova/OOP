@@ -27,9 +27,9 @@ public class Fire : MonoBehaviour
             int number = Random.Range(0, 10);
             if (number % 4 == 0)
                 Instantiate(AdditionalBombs, transform.position, transform.rotation);
-            else if (number % 3 == 0)
+            else if (number % 2 == 0)
                 Instantiate(ExtraFire, transform.position, transform.rotation);
-            else if (number % 3 == 1)
+            else if (number % 2 == 1)
                 Instantiate(SpeedUp, transform.position, transform.rotation);
             
         }

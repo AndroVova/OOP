@@ -16,8 +16,6 @@ ScriptsOnlyBuild:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridPaintingState
-    - UnityEditor.Tilemaps.GridPaletteBrushes
-    - UnityEditor.Tilemaps.GridPalettes
     - UnityEditor.Tilemaps.SceneViewGridManager
     - UnityEditor.Tilemaps.TileDragAndDropManager
     Unity.Rider.Editor.dll:
@@ -581,7 +579,7 @@ ScriptsOnlyBuild:
     className: Shadow
   - hash:
       serializedVersion: 2
-      Hash: caaf188e39f37e6efc404742249dd16c
+      Hash: 33606b597ddf453d2e04aa2db632a32b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PVPTextViewer
@@ -593,7 +591,7 @@ ScriptsOnlyBuild:
     className: Benchmark03
   - hash:
       serializedVersion: 2
-      Hash: 6a72551090414ee5d7730ac47555de97
+      Hash: b9d3eca61f06bd123eef7ce202329791
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Bomb
@@ -935,7 +933,7 @@ ScriptsOnlyBuild:
     className: BeforeAfterTestCommandState
   - hash:
       serializedVersion: 2
-      Hash: e440e07ecab20a40f7f368cb2f5226c8
+      Hash: 587c4b242702f779adac9633d8837c5f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Player
@@ -1131,5 +1129,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/Level 1.unity
   - Assets/Scenes/PvpMap.unity
   - Assets/Scenes/Settings.unity
-  playerPath: "C:/Users/Vova/Desktop/\u041D\u043E\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430
-    (2)/Bomberman.exe"
+  playerPath: C:/Users/Vova/Desktop/BomberMan/Bomberman.exe

@@ -7,7 +7,7 @@ public class Bomb : MonoBehaviour
     public float delay;
     private float counter;
 
-    public int fireLength;
+    //public int fireLength;
 
     public LayerMask WallLayer;
     public LayerMask BrickLayer;
@@ -20,7 +20,7 @@ public class Bomb : MonoBehaviour
     public GameObject FireUp;
     public GameObject FireDown;
 
-    public Player Creator;
+    public Player creator;
     public List<Vector2> CellsToBlowR;
     public List<Vector2> CellsToBlowL;
     public List<Vector2> CellsToBlowU;
@@ -28,7 +28,7 @@ public class Bomb : MonoBehaviour
 
     void Start()
     {
-        fireLength = Creator.fireLength;
+        
         counter = delay;
         CellsToBlowR = new List<Vector2>();
         CellsToBlowL = new List<Vector2>();
@@ -67,6 +67,7 @@ public class Bomb : MonoBehaviour
 
     private void CountCellToBlow(int dx, int dy, List<Vector2> CellsToBlow)
     {
+        int fireLength = creator.fireLength;
         for (int i = 1; i <= fireLength; i++)
         {
             if (IsBarrierNear(dx, dy, i, WallLayer))
@@ -81,11 +82,7 @@ public class Bomb : MonoBehaviour
             CellsToBlow.Add(new Vector2(transform.position.x + dx * i,
                                         transform.position.y + dy * i));
         }
-    }
-
-    private bool IsBarrierNear(int dx, int dy, int index, LayerMask barrier) 
-        => Physics2D.OverlapCircle(new Vector2(transform.position.x + dx * index,
-                                               transform.position.y + dy * index), 0.1f, barrier);
+    }  
 
     private void DrawFire(GameObject FireLast, GameObject FireMiddle, List<Vector2> CellsToBlow)
     {
@@ -97,5 +94,9 @@ public class Bomb : MonoBehaviour
                     Instantiate(FireMiddle, CellsToBlow[i], transform.rotation);
             }
     }
+
+    private bool IsBarrierNear(int dx, int dy, int index, LayerMask barrier)
+      => Physics2D.OverlapCircle(new Vector2(transform.position.x + dx * index,
+                                             transform.position.y + dy * index), 0.1f, barrier);
 
 }

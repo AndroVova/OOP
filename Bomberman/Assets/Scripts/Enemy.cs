@@ -13,7 +13,6 @@ public class Enemy : MonoBehaviour
 
     private bool canMove = false;
     private bool reverseMovement = true;
-    private bool rightMove;
     private PathFinding pathFinding;
 
     void Start()
@@ -60,11 +59,11 @@ public class Enemy : MonoBehaviour
         if (Vector2.Distance(transform.position, Player.transform.position) > 0)
             path = pathFinding.CalculateIdealPath();
 
-        if (path.Count == 1) return;
-
+        if (path.Count == 1) 
+            return;
 
         else if (seePlayer())
-            EnemyMove();
+            EnemyIntelectualMove();
         else
             NormalEnemyMove();        
         
@@ -76,19 +75,27 @@ public class Enemy : MonoBehaviour
     }
     private void NormalEnemyMove()
     {
-        if (canMove && !reverseMovement)
-            EnemyMove(0, 1);
-        else if (canMove && reverseMovement)
-            EnemyMove(0, -1);
-        if (rightMove)
-            EnemyMove(1, 0);
-        canMove = !Physics2D.OverlapBox(transform.position, new Vector2(0.9f, 0.9f), 0, BarrierLayer);
-        rightMove = Physics2D.OverlapBox(new Vector2(transform.position.x, transform.position.y + 1), new Vector2(0.9f, 0.9f), 0, BarrierLayer) &&
-                    Physics2D.OverlapBox(new Vector2(transform.position.x, transform.position.y - 1), new Vector2(0.9f, 0.9f), 0, BarrierLayer);
+        if (isBarrierNear)
+        {
+            if (canMove && reverseMovement)
+                EnemyMove(1, 0);
+            else if (canMove && !reverseMovement)
+                EnemyMove(-1, 0);
+        }
+        else
+        {
+            if (canMove && !reverseMovement)
+                EnemyMove(0, 1);
+            else if (canMove && reverseMovement)
+                EnemyMove(0, -1);
+        }
 
+        canMove = !Physics2D.OverlapBox(transform.position, new Vector2(0.9f, 0.9f), 0, BarrierLayer);        
     }
 
-    private void EnemyMove()
+    
+
+    private void EnemyIntelectualMove()
     {
         transform.position = Vector2.MoveTowards(transform.position,
                                                  new Vector2(path[1].X, 
@@ -114,8 +121,12 @@ public class Enemy : MonoBehaviour
         else
             return false;
     }
-    private bool isPlayer(int dx, int dy) => new Vector2(dx, dy) == new Vector2(Mathf.Round(Player.transform.position.x),
-                                                                                Mathf.Round(Player.transform.position.y));
+    private bool isPlayer(int dx, int dy)
+         => new Vector2(dx, dy) == new Vector2(Mathf.Round(Player.transform.position.x),
+                                               Mathf.Round(Player.transform.position.y));
+    private bool isBarrierNear
+         => Physics2D.OverlapBox(new Vector2(transform.position.x, transform.position.y - 1), new Vector2(0.9f, 0.9f), 0, BarrierLayer) &&
+            Physics2D.OverlapBox(new Vector2(transform.position.x, transform.position.y + 1), new Vector2(0.9f, 0.9f), 0, BarrierLayer);
 
     private void EnemyAnimation()
     {
